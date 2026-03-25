@@ -28,8 +28,11 @@ double Movie::getAverageRating() const
 
 void Movie::addRating(double r)
 {
-    if (r < 0.0 || r > 5.0)
-        return; // 유효성 검사
+    // 유효성 검사
+    if (r < 0.0 || r > 5.0) {
+        std::cout << "잘못된 범위의 rating이 추가되었습니다!\n";
+        return;
+    }
     totalRating += r;
     ratingCount++;
 }
