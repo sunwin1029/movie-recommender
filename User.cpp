@@ -11,7 +11,7 @@ void User::display() const {
               << "\n";
 }
 
-int User::getId() { return id; }
+int User::getId() const { return id; }
 
 std::string User::getName() const { return name; }
 
