@@ -20,6 +20,22 @@ double Movie::getAverageRating() const {
     return totalRating / ratingCount;
 }
 
+std::string Movie::getTitle() const {
+    return title;
+}
+
+std::string Movie::getGenre() const {
+    return genre;
+}
+
+int Movie::getReleaseYear() const{
+    return releaseYear;
+}
+
+int Movie::getRatingCount() const{
+    return ratingCount;
+}
+
 bool Movie::addRating(double r) {
     // 유효성 검사
     if(r < 0.0 || r > 5.0) {
@@ -37,6 +53,8 @@ void Movie::display() const {  // const 추가
               << "건)" << std::endl;
 }
 
+
+
 void Movie::setReleaseYear(int year) {
     if(year < 1888 || year > 2100) {
         std::cerr << "유효하지 않는 연도입니다.\n";
@@ -45,3 +63,4 @@ void Movie::setReleaseYear(int year) {
 
     releaseYear = year;
 }
+
