@@ -6,4 +6,4 @@
 
 void program();
 void execute(int menu);
-void printOption();
+void printMenu();

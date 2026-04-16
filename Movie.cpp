@@ -15,12 +15,6 @@ Movie::Movie(int id, const std::string& title, const std::string& genre,
       totalRating(0.0),
       ratingCount(0) {}
 
-int Movie::getId() const { return id; }
-std::string Movie::getTitle() const { return title; }
-std::string Movie::getGenre() const { return genre; }
-int Movie::getReleaseYear() const { return releaseYear; }
-int Movie::getRatingCount() const { return ratingCount; }
-
 double Movie::getAverageRating() const {
     if(ratingCount == 0) return 0.0;  // 0 나눗셈 방어
     return totalRating / ratingCount;
