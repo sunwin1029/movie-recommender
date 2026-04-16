@@ -25,4 +25,5 @@ public:
 
     void addRating(double r); // 추가
     void display() const;
+    void setReleaseYear(int year);
 };
