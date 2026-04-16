@@ -11,5 +11,6 @@ class Rating {
     int getUserId() const;
     int getMovieId() const;
     double getScore() const;
-    void display() const;
 };
+
+std::ostream& operator<<(std::ostream& os, const Rating& r);

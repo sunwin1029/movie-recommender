@@ -25,7 +25,10 @@ int Rating::getMovieId() const { return movieId; }
 
 double Rating::getScore() const { return score; }
 
-void Rating::display() const {
-    cout << "UserId : " << userId << "\nMovieId : " << movieId
-         << "\nScore : " << score << "\n";
+
+std::ostream& operator<<(std::ostream& os, const Rating& r) {
+    os << "UserId : " << r.getUserId() << "\nMovieId : " << r.getMovieId()
+       << "\nScore : " << r.getScore() << "\n";
+
+    return os;
 }
