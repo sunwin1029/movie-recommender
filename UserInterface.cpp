@@ -4,8 +4,10 @@
 void program(Manager& m) {
     int menu = -1;
 
+    printMenu();
+
     while(true) {
-        printMenu();
+        cout << "메뉴를 선택해주세요\n";
         cin >> menu;
         if(menu == 0) break;
 
@@ -53,6 +55,8 @@ void execute(int menu, Manager& m) {
             cout << "\n잘못된 메뉴입니다!\n";
             break;
     }
+
+    
 }
 
 // 사용 설명서 출력

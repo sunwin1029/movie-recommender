@@ -33,7 +33,6 @@ void Manager::addRating(int userId, int movieId, double score) {
 }
 
 void Manager::printMovieList() const {
-    std::cout << "[전체 영화 출력]\n";
     for(const Movie& m : movies) {
         std::cout << m;
     }
@@ -42,7 +41,6 @@ void Manager::printMovieList() const {
 
 // 후처리된 영화 목록을 출력하고 싶은 경우
 void Manager::printMovieList(const std::vector<Movie>& sorted) const {
-    std::cout << "[정렬된 영화 출력]\n";
     for(const Movie& m : sorted) {
         std::cout << m;
     }
@@ -50,7 +48,6 @@ void Manager::printMovieList(const std::vector<Movie>& sorted) const {
 }
 
 void Manager::printUserList() const {
-    std::cout << "[전체 사용자 출력]\n";
     for(const User& u : users) {
         std::cout << u;
     }
