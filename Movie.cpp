@@ -47,8 +47,6 @@ std::ostream& operator<<(std::ostream& os, const Movie& m) {
     return os;
 }
 
-
-
 void Movie::setReleaseYear(int year) {
     if(year < 1888 || year > 2100) {
         std::cerr << "유효하지 않는 연도입니다.\n";
@@ -56,4 +54,12 @@ void Movie::setReleaseYear(int year) {
     }
 
     releaseYear = year;
+}
+
+bool Movie::operator<(const Movie& other) const {
+    if(getAverageRating() == other.getAverageRating()) {
+        return title < other.title;
+    }
+    // 평점이 큰 영화가 앞에 오도록
+    return getAverageRating() > other.getAverageRating();
 }

@@ -14,3 +14,7 @@ void printMenu();
 void addMovie(Manager& m);
 void findMovieByTitle(Manager& m);
 void printAllMovies(Manager& m);
+void printSortedMovies(Manager& m);
+void addUser(Manager& m);
+void printUsers(Manager& m);
+void addRating(Manager& m);

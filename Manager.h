@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "Movie.h"
 #include "Rating.h"
@@ -28,8 +29,12 @@ class Manager {
     // 제목으로 영화 찾기
     Movie* findMovieByTitle(const std::string& title);
     
+    // 정렬된 영화 리스트 반환하기
+    std::vector <Movie> getSortedMovies() const;
+    
 
     void printMovieList() const;
+    void printMovieList(const std::vector<Movie>& sorted) const;
     void printMoviesByRating() const;
     void printUserList() const;
     void printRatingByMovie() const;

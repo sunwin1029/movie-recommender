@@ -40,6 +40,15 @@ void Manager::printMovieList() const {
     std::cout << "\n";
 }
 
+// 후처리된 영화 목록을 출력하고 싶은 경우
+void Manager::printMovieList(const std::vector<Movie>& sorted) const {
+    std::cout << "[정렬된 영화 출력]\n";
+    for(const Movie& m : sorted) {
+        std::cout << m;
+    }
+    std::cout << "\n";
+}
+
 void Manager::printUserList() const {
     std::cout << "[전체 사용자 출력]\n";
     for(const User& u : users) {
@@ -72,4 +81,11 @@ User* Manager::findUserById(int id) {
         }
     }
     return NULL;
+}
+
+std::vector<Movie> Manager::getSortedMovies() const {
+    std::vector<Movie> sorted = movies;
+    std::sort(sorted.begin(), sorted.end());
+
+    return sorted;
 }

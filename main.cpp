@@ -4,7 +4,7 @@ using namespace std;
 int main() {
 
     Manager m = Manager();
-    program();
+    program(m);
 
     return 0;
 }
