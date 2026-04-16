@@ -14,10 +14,17 @@ class Manager {
    public:
     void addMovie(int id, const std::string& title, const std::string& genre,
                   int year);
-    void addUser();
-    void addRating();
+    void addUser(int id, const std::string& name, const std::string& email);
+    void addRating(int userId, int movieId, double score);
 
-    Movie* findMovieByTitle();
+    // id 기반 객체 찾기
+    Movie* findMovieById(int id);
+    User* findUserById(int id);
+    Rating* findRatingById(int id);
+
+    // 제목으로 영화 찾기
+    Movie* findMovieByTitle(const std::string& title);
+    
 
     void printMovieList() const;
     void printMoviesByRating() const;

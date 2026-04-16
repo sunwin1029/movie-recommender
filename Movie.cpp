@@ -20,14 +20,15 @@ double Movie::getAverageRating() const {
     return totalRating / ratingCount;
 }
 
-void Movie::addRating(double r) {
+bool Movie::addRating(double r) {
     // 유효성 검사
     if(r < 0.0 || r > 5.0) {
         std::cout << "잘못된 범위의 rating이 추가되었습니다!\n";
-        return;
+        return false;
     }
     totalRating += r;
     ratingCount++;
+    return true;
 }
 
 void Movie::display() const {  // const 추가
