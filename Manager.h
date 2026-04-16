@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
 #include "Movie.h"
 #include "Rating.h"
@@ -12,6 +13,8 @@ class Manager {
     std::vector<User> users;
 
    public:
+    Manager();
+
     void addMovie(int id, const std::string& title, const std::string& genre,
                   int year);
     void addUser(int id, const std::string& name, const std::string& email);

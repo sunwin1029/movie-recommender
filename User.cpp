@@ -1,6 +1,4 @@
 #include "User.h"
-
-#include <iostream>
 using namespace std;
 
 User::User(int id, const string& name, const string& email)

@@ -1,14 +1,5 @@
 #include "Rating.h"
-#include <iostream>
 using namespace std;
-
-// Rating::Rating(int userId, int movieId, double score)
-//     : userId(userId), movieId(movieId), score(score) {
-//     }
-
-// Rating::Rating(int userId, int movieId, double score)
-//     : userId(userId), movieId(movieId), score((score >= 0.0 && score <= 5.0) ? score : 0.0) {
-//     }
 
 // 범위 검사를 위해 초기화 리스트 대신, 생성자를 직접 정의하였습니다.
 Rating::Rating(int userId, int movieId, double score) :

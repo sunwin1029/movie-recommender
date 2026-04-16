@@ -1,7 +1,5 @@
 #include "Movie.h"
 
-#include <iostream>
-
 // 기본 생성자
 Movie::Movie() : id(0), releaseYear(0), totalRating(0.0), ratingCount(0) {}
 

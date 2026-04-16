@@ -3,7 +3,14 @@
 #include "Movie.h"
 #include "Rating.h"
 #include "User.h"
+#include "Manager.h"
 
-void program();
-void execute(int menu);
+using namespace std;
+
+void program(Manager& m);
+void execute(int menu, Manager &m);
 void printMenu();
+
+void addMovie(Manager& m);
+void findMovieByTitle(Manager& m);
+void printAllMovies(Manager& m);

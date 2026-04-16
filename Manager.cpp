@@ -1,5 +1,10 @@
 #include "Manager.h"
 
+Manager::Manager()
+    : movies(std::vector<Movie>()),
+      ratings(std::vector<Rating>()),
+      users(std::vector<User>()) {}
+
 void Manager::addMovie(int id, const std::string& title,
                        const std::string& genre, int year) {
     movies.emplace_back(Movie(id, title, genre, year));
@@ -38,7 +43,7 @@ void Manager::printMovieList() const {
 void Manager::printUserList() const {
     std::cout << "[전체 사용자 출력]\n";
     for(const User& u : users) {
-        u.display();
+        std::cout << u;
     }
 }
 
