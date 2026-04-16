@@ -20,21 +20,15 @@ double Movie::getAverageRating() const {
     return totalRating / ratingCount;
 }
 
-std::string Movie::getTitle() const {
-    return title;
-}
+std::string Movie::getTitle() const { return title; }
 
-std::string Movie::getGenre() const {
-    return genre;
-}
+std::string Movie::getGenre() const { return genre; }
 
-int Movie::getReleaseYear() const{
-    return releaseYear;
-}
+int Movie::getId() const { return id; }
 
-int Movie::getRatingCount() const{
-    return ratingCount;
-}
+int Movie::getReleaseYear() const { return releaseYear; }
+
+int Movie::getRatingCount() const { return ratingCount; }
 
 bool Movie::addRating(double r) {
     // 유효성 검사
@@ -47,10 +41,12 @@ bool Movie::addRating(double r) {
     return true;
 }
 
-void Movie::display() const {  // const 추가
-    std::cout << id << ". " << title << " (" << releaseYear << ")"
-              << "  평점: " << getAverageRating() << " (" << ratingCount
-              << "건)" << std::endl;
+std::ostream& operator<<(std::ostream& os, const Movie& m) {
+    os << m.getId() << ". " << m.getTitle() << " (" << m.getReleaseYear() << ")"
+       << "  평점: " << m.getAverageRating() << " (" << m.getRatingCount()
+       << "건)" << std::endl;
+
+    return os;
 }
 
 
@@ -63,4 +59,3 @@ void Movie::setReleaseYear(int year) {
 
     releaseYear = year;
 }
-

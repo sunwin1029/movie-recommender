@@ -30,7 +30,7 @@ void Manager::addRating(int userId, int movieId, double score) {
 void Manager::printMovieList() const {
     std::cout << "[전체 영화 출력]\n";
     for(const Movie& m : movies) {
-        m.display();
+        std::cout << m;
     }
     std::cout << "\n";
 }
