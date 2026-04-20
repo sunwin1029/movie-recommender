@@ -7,10 +7,15 @@ void program(Manager& m) {
     printMenu();
 
     while(true) {
-        cout << "메뉴를 선택해주세요\n";
+        cout << "메뉴를 선택해주세요(도움말 : \"9\")\n";
         cin >> menu;
-        if(menu == 0) break;
 
+        if(cin.fail()) {
+            cout << "잘못된 입력입니다!\n";
+            continue;
+        }
+
+        if(menu == 0) break;
         execute(menu, m);
     }
 
@@ -20,6 +25,7 @@ void program(Manager& m) {
 // 각 기능 실행 함수
 void execute(int menu, Manager& m) {
     switch(menu) {
+        
         case 1:
             // 영화 추가
             addMovie(m);
@@ -51,6 +57,10 @@ void execute(int menu, Manager& m) {
         case 8:
             // 영화별 평점 보기
             getRatingsofMovie(m);
+            break;
+        case 9:
+            // 도움말 출력
+            printMenu();
             break;
         default:
             cout << "잘못된 "
@@ -188,8 +198,8 @@ void addRating(Manager& m) {
 
 // 8. 영화별 평점 보기
 void getRatingsofMovie(Manager& m) {
-    string movieName; // 영화 제목
-    Movie* movie; // 영화 객체
+    string movieName;  // 영화 제목
+    Movie* movie;      // 영화 객체
 
     cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : -1)\n";
     cin.ignore();
@@ -203,7 +213,8 @@ void getRatingsofMovie(Manager& m) {
 
     while(movie == NULL) {
         cout << "등록되지 않은 영화입니다\n";
-        cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : -1)\n";
+        cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : "
+                "-1)\n";
         getline(cin, movieName);
 
         if(movieName == "-1") {
