@@ -35,6 +35,10 @@ void Manager::addRating(int userId, int movieId, double score) {
 }
 
 void Manager::printMovieList() const {
+    if(movies.size() < 1) {
+        std::cout << "영화 목록이 존재하지 않습니다!\n";
+        return;
+    }
     for(const Movie& m : movies) {
         std::cout << m;
     }
@@ -43,6 +47,10 @@ void Manager::printMovieList() const {
 
 // 후처리된 영화 목록을 출력하고 싶은 경우
 void Manager::printMovieList(const std::vector<Movie>& sorted) const {
+    if(movies.size() < 1) {
+        std::cout << "영화 목록이 존재하지 않습니다!\n";
+        return;
+    }
     for(const Movie& m : sorted) {
         std::cout << m;
     }
@@ -50,6 +58,10 @@ void Manager::printMovieList(const std::vector<Movie>& sorted) const {
 }
 
 void Manager::printUserList() const {
+    if(users.size() < 1) {
+        std::cout << "사용자 목록이 존재하지 않습니다!\n";
+        return; 
+    }
     for(const User& u : users) {
         std::cout << u;
     }

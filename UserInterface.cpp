@@ -181,30 +181,46 @@ void printUsers(Manager& m) {
 void addRating(Manager& m) {
     int movieId, userId;
     double score;
-    // 영화 제목은 우연히 겹칠 수도 있으니, id로 찾기(우선은)
-    cout << "평점을 등록하고 싶은 영화 id를 알려주세요\n";
-    cin >> movieId;
+
     Movie* movie;
-
-    // 영화 id 검증
-    while((movie = m.findMovieById(movieId)) == NULL) {
-        cout << "등록되지 않은 영화입니다\n";
-        cout << "평점을 등록하고 싶은 영화 id를 알려주세요\n";
-        cin >> movieId;
-    }
-
-    cout << "평점을 등록하고 싶은 사용자의 id를 알려주세요\n";
-    cin >> userId;
     User* user;
+    // 영화 제목은 우연히 겹칠 수도 있으니, id로 찾기(우선은)
+    while(true) {
+        movieId = getInteger("영화 id는 정수값입니다!\n",
+                             "평점을 등록하고 싶은 영화 id를 알려주세요\n");
 
-    while((user = m.findUserById(userId)) == NULL) {
-        cout << "등록되지 않은 사용자입니다\n";
-        cout << "평점을 등록하고 싶은 사용자의 id를 알려주세요\n";
-        cin >> userId;
+        if((movie = m.findMovieById(movieId)) == NULL) {
+            cout << "등록되지 않은 영화입니다!\n";
+            continue;
+        }
+
+        break;
     }
 
-    cout << "영화의 평점을 입력해주세요\n";
-    cin >> score;
+    while(true) {
+        userId = getInteger("사용자 id는 정수값입니다!\n",
+                            "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
+        if((user = m.findUserById(userId)) == NULL) {
+            cout << "등록되지 않은 사용자입니다!\n";
+            continue;
+        }
+        break;
+    }
+    
+    while(true) {
+        cout << "영화의 평점을 입력해주세요\n";
+        cin >> score;
+
+        if(cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "잘못된 평점 값입니다!\n";
+            continue;
+        }
+
+        cin.ignore(1000, '\n');
+        break;
+    }
 
     m.addRating(userId, movieId, score);
 }
@@ -215,7 +231,6 @@ void getRatingsofMovie(Manager& m) {
     Movie* movie;      // 영화 객체
 
     cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : -1)\n";
-    cin.ignore();
     getline(cin, movieName);
 
     if(movieName == "-1") {
