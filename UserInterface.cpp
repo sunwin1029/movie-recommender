@@ -161,7 +161,6 @@ void addUser(Manager& m) {
         id =
             getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
     }
-    cin.ignore();
 
     cout << "사용자 이름을 입력하세요\n> ";
     getline(cin, name);
