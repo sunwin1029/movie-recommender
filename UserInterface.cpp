@@ -107,7 +107,7 @@ void addMovie(Manager& m) {
     // 개봉연도 입력받기(범위 검사)
     while(true) {
         year = getInteger("잘못된 개봉연도입니다! 정수형으로 입력해주세요\n",
-                          "영화 개봉연도를 입력하세요\n");
+                          "영화 개봉연도를 입력하세요\n> ");
 
         if(year < 1888 || year > 2100) {
             cout << "유효하지 않는 연도가 입력됐습니다! \n";
@@ -191,7 +191,7 @@ void addRating(Manager& m) {
 
         if((movie = m.findMovieById(movieId)) == NULL) {
             cout << "등록되지 않은 영화입니다!\n";
-            continue;
+            return;
         }
 
         break;
@@ -202,11 +202,11 @@ void addRating(Manager& m) {
                             "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
         if((user = m.findUserById(userId)) == NULL) {
             cout << "등록되지 않은 사용자입니다!\n";
-            continue;
+            return;
         }
         break;
     }
-    
+
     while(true) {
         cout << "영화의 평점을 입력해주세요\n";
         cin >> score;
