@@ -184,7 +184,7 @@ void addRating(Manager& m) {
 
     Movie* movie;
     User* user;
-    // 영화 제목은 우연히 겹칠 수도 있으니, id로 찾기(우선은)
+    // 영화 제목은 우연히 겹칠 수도 있으니, id로 찾기
     while(true) {
         movieId = getInteger("영화 id는 정수값입니다!\n",
                              "평점을 등록하고 싶은 영화 id를 알려주세요\n");
