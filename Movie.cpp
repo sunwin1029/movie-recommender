@@ -31,7 +31,6 @@ int Movie::getRatingCount() const { return ratingCount; }
 bool Movie::addRating(double r) {
     // 유효성 검사
     if(r < 0.0 || r > 5.0) {
-        std::cout << "잘못된 범위의 rating이 추가되었습니다!\n";
         return false;
     }
     totalRating += r;

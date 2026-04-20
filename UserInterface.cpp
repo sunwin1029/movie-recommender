@@ -254,6 +254,10 @@ void getRatingsofMovie(Manager& m) {
 
     std::vector<Rating> ratingList = m.getRatingsofMovie(*movie);
 
+    if(ratingList.size() < 1) {
+        cout << movie->getTitle() << " 은 아직 평점이 없습니다!\n";
+    }
+
     cout << movie->getTitle() << " 의 평점 목록입니다.\n";
 
     for(Rating& r : ratingList) {

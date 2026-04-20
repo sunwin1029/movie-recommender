@@ -47,7 +47,7 @@ void Manager::printMovieList() const {
 
 // 후처리된 영화 목록을 출력하고 싶은 경우
 void Manager::printMovieList(const std::vector<Movie>& sorted) const {
-    if(movies.size() < 1) {
+    if(sorted.size() < 1) {
         std::cout << "영화 목록이 존재하지 않습니다!\n";
         return;
     }
