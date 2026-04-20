@@ -83,17 +83,40 @@ void addMovie(Manager& m) {
     int id, year;
     string title, genre;
 
-    id = getInteger("잘못된 id입니다! 정수형으로 입력해주세요\n",
-                    "영화 id를 입력하세요\n> ");
+    // id 입력받기(중복 검사)
+    while(true) {
+        id = getInteger("잘못된 id입니다! 정수형으로 입력해주세요\n",
+                        "영화 id를 입력하세요\n> ");
 
-    cin.ignore();
+        if(m.findMovieById(id) != NULL) {
+            cout << "중복된 id입니다!\n";
+            continue;
+        }
+
+        break;
+    }
+
+    // 영화 제목 입력받기
     cout << "영화 제목을 입력하세요\n> ";
     getline(cin, title);
+
+    // 영화 장르 입력받기
     cout << "영화 장르를 입력하세요\n> ";
     getline(cin, genre);
 
-    year = getInteger("잘못된 개봉년도입니다! 정수형으로 입력해주세요\n",
-                      "영화 개봉년도를 입력하세요\n");
+    // 개봉연도 입력받기(범위 검사)
+    while(true) {
+        year = getInteger("잘못된 개봉연도입니다! 정수형으로 입력해주세요\n",
+                          "영화 개봉연도를 입력하세요\n");
+
+        if(year < 1888 || year > 2100) {
+            cout << "유효하지 않는 연도가 입력됐습니다! \n";
+            continue;
+        }
+
+        break;
+    }
+
     m.addMovie(id, title, genre, year);
 }
 
@@ -230,14 +253,18 @@ int getInteger(const std::string& warningMessage,
                const std::string& stringRequireMessage) {
     int val;
 
-    cout << stringRequireMessage;
-    cin >> val;
-
-    while(cin.fail()) {
-        cout << warningMessage << "\n";
+    while(true) {
         cout << stringRequireMessage;
         cin >> val;
-    }
 
-    return val;
+        if(cin.fail()) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << warningMessage << "\n";
+            continue;
+        }
+
+        cin.ignore(1000, '\n');
+        return val;
+    }
 }

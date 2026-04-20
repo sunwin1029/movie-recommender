@@ -7,7 +7,9 @@ Manager::Manager()
 
 void Manager::addMovie(int id, const std::string& title,
                        const std::string& genre, int year) {
-    movies.emplace_back(Movie(id, title, genre, year));
+    Movie movie = Movie(id, title, genre, year);
+                    
+    movies.emplace_back(movie);
 }
 
 void Manager::addUser(int id, const std::string& name,
