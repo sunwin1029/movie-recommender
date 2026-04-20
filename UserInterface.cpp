@@ -125,7 +125,6 @@ void findMovieByTitle(Manager& m) {
     string title;
 
     cout << "찾으려는 영화 제목을 입력하세요\n> ";
-    cin.ignore();
     getline(cin, title);
 
     Movie* movie = m.findMovieByTitle(title);
