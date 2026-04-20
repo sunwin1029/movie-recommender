@@ -18,3 +18,4 @@ void printSortedMovies(Manager& m);
 void addUser(Manager& m);
 void printUsers(Manager& m);
 void addRating(Manager& m);
+void getRatingsofMovie(Manager& m);

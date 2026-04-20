@@ -50,27 +50,27 @@ void execute(int menu, Manager& m) {
             break;
         case 8:
             // 영화별 평점 보기
+            getRatingsofMovie(m);
             break;
         default:
-            cout << "\n잘못된 메뉴입니다!\n";
+            cout << "잘못된 "
+                    "메뉴입니다!\n";
             break;
     }
-
-    
 }
 
 // 사용 설명서 출력
 void printMenu() {
     cout << "=== Movie Recommender ===\n";
 
-    cout << "[ 영화 ]\n\t1. 영화 추가\n\t2. 제목으로 검색\n\t3. 전체 목록 "
-            "출력\n\t4. 평점순 정렬 출력\n\n";
+    cout << "[ 영화 ]\n  1. 영화 추가\n  2. 제목으로 검색\n  3. 전체 목록 "
+            "출력\n  4. 평점순 정렬 출력\n\n";
 
-    cout << "[ 사용자 ]\n\t5. 사용자 추가\n\t6. 사용자 목록 출력\n\n";
+    cout << "[ 사용자 ]\n  5. 사용자 추가\n  6. 사용자 목록 출력\n\n";
 
-    cout << "[ 평점 ]\n\t7. 평점 입력\n\t8. 영화별 평점 보기\n\n";
+    cout << "[ 평점 ]\n  7. 평점 입력\n  8. 영화별 평점 보기\n\n";
 
-    cout << "\t0. 종료\n\n";
+    cout << "  0. 종료\n\n";
 
     cout << "선택 > ";
 }
@@ -163,6 +163,7 @@ void addRating(Manager& m) {
     cin >> movieId;
     Movie* movie;
 
+    // 영화 id 검증
     while((movie = m.findMovieById(movieId)) == NULL) {
         cout << "등록되지 않은 영화입니다\n";
         cout << "평점을 등록하고 싶은 영화 id를 알려주세요\n";
@@ -186,3 +187,37 @@ void addRating(Manager& m) {
 }
 
 // 8. 영화별 평점 보기
+void getRatingsofMovie(Manager& m) {
+    string movieName; // 영화 제목
+    Movie* movie; // 영화 객체
+
+    cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : -1)\n";
+    cin.ignore();
+    getline(cin, movieName);
+
+    if(movieName == "-1") {
+        return;
+    }
+
+    movie = m.findMovieByTitle(movieName);
+
+    while(movie == NULL) {
+        cout << "등록되지 않은 영화입니다\n";
+        cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : -1)\n";
+        getline(cin, movieName);
+
+        if(movieName == "-1") {
+            return;
+        }
+
+        movie = m.findMovieByTitle(movieName);
+    }
+
+    std::vector<Rating> ratingList = m.getRatingsofMovie(*movie);
+
+    cout << movie->getTitle() << " 의 평점 목록입니다.\n";
+
+    for(Rating& r : ratingList) {
+        cout << r << std::endl;
+    }
+}

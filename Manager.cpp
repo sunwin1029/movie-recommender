@@ -86,3 +86,17 @@ std::vector<Movie> Manager::getSortedMovies() const {
 
     return sorted;
 }
+
+std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
+    std::vector<Rating> eachMovieRatings;
+
+    int movieId = movie.getId();
+
+    for(const Rating& r : ratings) {
+        if(r.getMovieId() == movieId) {
+            eachMovieRatings.push_back(r);
+        }
+    }
+
+    return eachMovieRatings;
+}
