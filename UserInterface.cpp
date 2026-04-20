@@ -7,14 +7,8 @@ void program(Manager& m) {
     printMenu();
 
     while(true) {
-        cout << "메뉴를 선택해주세요(도움말 : \"9\")\n";
-        cin >> menu;
-
-        if(cin.fail()) {
-            cout << "잘못된 입력입니다!\n";
-            continue;
-        }
-
+        menu = getInteger("잘못된 입력입니다!\n",
+                          "메뉴를 선택해주세요(도움말 : \"9\")\n");
         if(menu == 0) break;
         execute(menu, m);
     }
@@ -25,7 +19,6 @@ void program(Manager& m) {
 // 각 기능 실행 함수
 void execute(int menu, Manager& m) {
     switch(menu) {
-        
         case 1:
             // 영화 추가
             addMovie(m);
@@ -69,7 +62,7 @@ void execute(int menu, Manager& m) {
     }
 }
 
-// 사용 설명서 출력
+// 9. 사용 설명서 출력
 void printMenu() {
     cout << "=== Movie Recommender ===\n";
 
@@ -86,21 +79,21 @@ void printMenu() {
 }
 
 // 1. 영화 추가
-
 void addMovie(Manager& m) {
     int id, year;
     string title, genre;
 
-    cout << "영화 id를 입력하세요\n> ";
-    cin >> id;
+    id = getInteger("잘못된 id입니다! 정수형으로 입력해주세요\n",
+                    "영화 id를 입력하세요\n> ");
+
     cin.ignore();
     cout << "영화 제목을 입력하세요\n> ";
     getline(cin, title);
     cout << "영화 장르를 입력하세요\n> ";
     getline(cin, genre);
-    cout << "영화 개봉년도를 입력하세요\n> ";
-    cin >> year;
 
+    year = getInteger("잘못된 개봉년도입니다! 정수형으로 입력해주세요\n",
+                      "영화 개봉년도를 입력하세요\n");
     m.addMovie(id, title, genre, year);
 }
 
@@ -138,14 +131,13 @@ void addUser(Manager& m) {
     int id;
     string name, email;
 
-    cout << "사용자 id를 입력하세요\n> ";
-    cin >> id;
+    id = getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
 
     // 중복 id 방지
     while(m.findUserById(id) != NULL) {
         cout << "중복된 사용자입니다!";
-        cout << "사용자 id를 입력하세요\n> ";
-        cin >> id;
+        id =
+            getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
     }
     cin.ignore();
 
@@ -231,4 +223,21 @@ void getRatingsofMovie(Manager& m) {
     for(Rating& r : ratingList) {
         cout << r << std::endl;
     }
+}
+
+// 정수값 검증 함수
+int getInteger(const std::string& warningMessage,
+               const std::string& stringRequireMessage) {
+    int val;
+
+    cout << stringRequireMessage;
+    cin >> val;
+
+    while(cin.fail()) {
+        cout << warningMessage << "\n";
+        cout << stringRequireMessage;
+        cin >> val;
+    }
+
+    return val;
 }

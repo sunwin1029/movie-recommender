@@ -49,7 +49,7 @@ std::ostream& operator<<(std::ostream& os, const Movie& m) {
 
 void Movie::setReleaseYear(int year) {
     if(year < 1888 || year > 2100) {
-        std::cerr << "유효하지 않는 연도입니다.\n";
+        std::cerr << "유효하지 않는 연도가 입력됐습니다!.\n";
         return;
     }
 
