@@ -179,32 +179,27 @@ void printUsers(Manager& m) {
 
 // 7. 평점 입력
 void addRating(Manager& m) {
-    int movieId, userId;
+    int userId;
+    string movieName;
     double score;
 
     Movie* movie;
     User* user;
-    // 영화 제목은 우연히 겹칠 수도 있으니, id로 찾기
-    while(true) {
-        movieId = getInteger("영화 id는 정수값입니다!\n",
-                             "평점을 등록하고 싶은 영화 id를 알려주세요\n");
+    // 영화 제목 기반 영화 찾기
+    cout << "평점을 입력할 영화 제목을 입력해주세요!\n";
+    getline(cin, movieName);
 
-        if((movie = m.findMovieById(movieId)) == NULL) {
-            cout << "등록되지 않은 영화입니다!\n";
-            return;
-        }
-
-        break;
+    if((movie = m.findMovieByTitle(movieName)) == NULL) {
+        cout << "등록되지 않은 영화입니다!\n";
+        return;
     }
 
-    while(true) {
-        userId = getInteger("사용자 id는 정수값입니다!\n",
-                            "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
-        if((user = m.findUserById(userId)) == NULL) {
-            cout << "등록되지 않은 사용자입니다!\n";
-            return;
-        }
-        break;
+    // 사용자 id 기반 사용자 찾기
+    userId = getInteger("사용자 id는 정수값입니다!\n",
+                        "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
+    if((user = m.findUserById(userId)) == NULL) {
+        cout << "등록되지 않은 사용자입니다!\n";
+        return;
     }
 
     while(true) {
@@ -222,7 +217,7 @@ void addRating(Manager& m) {
         break;
     }
 
-    m.addRating(userId, movieId, score);
+    m.addRating(userId, movie->getId(), score);
 }
 
 // 8. 영화별 평점 보기
@@ -256,8 +251,7 @@ void getRatingsofMovie(Manager& m) {
 
     if(ratingList.size() < 1) {
         cout << movie->getTitle() << " 은 아직 평점이 없습니다!\n";
-    }
-    else {
+    } else {
         cout << movie->getTitle() << " 의 평점 목록입니다.\n";
     }
 
