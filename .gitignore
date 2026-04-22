@@ -1,0 +1,6 @@
+# object 파일
+*.o
+# 실행 파일
+movie_recommender
+# 맥
+.DS_Store

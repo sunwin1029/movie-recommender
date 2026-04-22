@@ -2,7 +2,7 @@
 
 int main() {
 
-    Manager m = Manager();
+    Manager m;
     program(m);
 
     return 0;
