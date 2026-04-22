@@ -1,5 +1,4 @@
 #include "UserInterface.h"
-using namespace std;
 
 int main() {
 
