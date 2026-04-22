@@ -62,3 +62,7 @@ bool Movie::operator<(const Movie& other) const {
     // 평점이 큰 영화가 앞에 오도록
     return getAverageRating() > other.getAverageRating();
 }
+
+bool Movie::operator==(const Movie& other) const {
+    return id == other.id;
+}

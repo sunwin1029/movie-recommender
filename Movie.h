@@ -24,6 +24,7 @@ class Movie {
     bool addRating(double r);  // 추가
     void setReleaseYear(int year);
     bool operator<(const Movie& other) const;
+    bool operator==(const Movie& other) const;
 };
 
 std::ostream& operator<<(std::ostream& os, const Movie& m);
