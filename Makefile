@@ -6,7 +6,7 @@ OBJS = main.o Movie.o User.o Rating.o UserInterface.o Manager.o
 $(TARGET): $(OBJS)
 		$(CXX) $(CXXFLAGS) -o $@ $^
 
-main.o: main.cpp Movie.h
+main.o: main.cpp UserInterface.h
 		$(CXX) $(CXXFLAGS) -c $<
 
 Movie.o: Movie.cpp Movie.h
@@ -18,10 +18,10 @@ User.o: User.cpp User.h
 Rating.o: Rating.cpp Rating.h
 		$(CXX) $(CXXFLAGS) -c $<
 
-UserInterface.o: UserInterface.cpp UserInterface.h
+UserInterface.o: UserInterface.cpp UserInterface.h Manager.h Movie.h User.h Rating.h
 		$(CXX) $(CXXFLAGS) -c $<
 
-Manager.o: Manager.cpp Manager.h
+Manager.o: Manager.cpp Manager.h Movie.h User.h Rating.h
 		$(CXX) $(CXXFLAGS) -c $<
 
 
