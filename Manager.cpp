@@ -21,7 +21,7 @@ void Manager::addRating(int userId, int movieId, double score) {
     Movie* m = findMovieById(movieId);
     User* u = findUserById(userId);
 
-    if(m == NULL || u == NULL) {
+    if(m == nullptr || u == nullptr) {
         std::cout << "잘못된 입력입니다!\n";
         return;
     }
@@ -73,7 +73,7 @@ Movie* Manager::findMovieByTitle(const std::string& title) {
             return &m;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 Movie* Manager::findMovieById(int id) {
@@ -82,7 +82,7 @@ Movie* Manager::findMovieById(int id) {
             return &m;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 User* Manager::findUserById(int id) {
@@ -91,7 +91,7 @@ User* Manager::findUserById(int id) {
             return &u;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 std::vector<Movie> Manager::getSortedMovies() const {

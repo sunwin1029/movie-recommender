@@ -88,7 +88,7 @@ void addMovie(Manager& m) {
         id = getInteger("잘못된 id입니다! 정수형으로 입력해주세요\n",
                         "영화 id를 입력하세요\n> ");
 
-        if(m.findMovieById(id) != NULL) {
+        if(m.findMovieById(id) != nullptr) {
             cout << "중복된 id입니다!\n";
             continue;
         }
@@ -129,7 +129,7 @@ void findMovieByTitle(Manager& m) {
 
     Movie* movie = m.findMovieByTitle(title);
 
-    if(movie == NULL) {
+    if(movie == nullptr) {
         cout << "존재하지 않는 영화입니다\n";
     } else {
         cout << *movie;
@@ -156,7 +156,7 @@ void addUser(Manager& m) {
     id = getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
 
     // 중복 id 방지
-    while(m.findUserById(id) != NULL) {
+    while(m.findUserById(id) != nullptr) {
         cout << "중복된 사용자입니다!";
         id =
             getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
@@ -189,7 +189,7 @@ void addRating(Manager& m) {
     cout << "평점을 입력할 영화 제목을 입력해주세요!\n";
     getline(cin, movieName);
 
-    if((movie = m.findMovieByTitle(movieName)) == NULL) {
+    if((movie = m.findMovieByTitle(movieName)) == nullptr) {
         cout << "등록되지 않은 영화입니다!\n";
         return;
     }
@@ -197,7 +197,7 @@ void addRating(Manager& m) {
     // 사용자 id 기반 사용자 찾기
     userId = getInteger("사용자 id는 정수값입니다!\n",
                         "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
-    if((user = m.findUserById(userId)) == NULL) {
+    if((user = m.findUserById(userId)) == nullptr) {
         cout << "등록되지 않은 사용자입니다!\n";
         return;
     }
@@ -234,7 +234,7 @@ void getRatingsofMovie(Manager& m) {
 
     movie = m.findMovieByTitle(movieName);
 
-    while(movie == NULL) {
+    while(movie == nullptr) {
         cout << "등록되지 않은 영화입니다\n";
         cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : "
                 "-1)\n";
