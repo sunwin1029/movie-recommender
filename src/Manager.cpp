@@ -9,6 +9,8 @@ void Manager::loadAll() {
     movieManager.loadFromFile("data/movies.csv");
     userManager.loadFromFile("data/users.csv");
     ratingManager.loadFromFile("data/ratings.csv");
+
+    for(const Rating& rating)
 }
 
 // CSV 파일에 저장
