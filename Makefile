@@ -1,31 +1,20 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -g
+CXXFLAGS = -std=c++17 -Wall -g -Iinclude
 TARGET = movie_recommender
-OBJS = main.o Movie.o User.o Rating.o UserInterface.o Manager.o
+SRCS = src/main.cpp src/Movie.cpp src/User.cpp src/Rating.cpp src/UserInterface.cpp src/Manager.cpp
+OBJS = obj/main.o obj/Movie.o obj/User.o obj/Rating.o obj/UserInterface.o obj/Manager.o
+HEADERS = include/Movie.h include/User.h include/Rating.h include/UserInterface.h include/Manager.h
 
 $(TARGET): $(OBJS)
 		$(CXX) $(CXXFLAGS) -o $@ $^
 
-main.o: main.cpp UserInterface.h
-		$(CXX) $(CXXFLAGS) -c $<
-
-Movie.o: Movie.cpp Movie.h
-		$(CXX) $(CXXFLAGS) -c $<
-
-User.o: User.cpp User.h
-		$(CXX) $(CXXFLAGS) -c $<
-
-Rating.o: Rating.cpp Rating.h
-		$(CXX) $(CXXFLAGS) -c $<
-
-UserInterface.o: UserInterface.cpp UserInterface.h Manager.h Movie.h User.h Rating.h
-		$(CXX) $(CXXFLAGS) -c $<
-
-Manager.o: Manager.cpp Manager.h Movie.h User.h Rating.h
-		$(CXX) $(CXXFLAGS) -c $<
-
+obj/%.o: src/%.cpp $(HEADERS) | obj
+		$(CXX) $(CXXFLAGS) -c $< -o $@
 
 .PHONY: clean run
+
+obj:
+		mkdir -p obj
 
 clean:
 		rm -f $(OBJS) $(TARGET)

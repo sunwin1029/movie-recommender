@@ -1,4 +1,7 @@
 #include "Manager.h"
+#include <fstream>
+#include <sstream>
+using namespace std;
 
 Manager::Manager()
     : movies(std::vector<Movie>()),
@@ -113,4 +116,24 @@ std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
     }
 
     return eachMovieRatings;
+}
+
+std::vector<Movie> Manager::loadMoviesFromFile(const std::string& filename) const {
+    std::vector<Movie> movies;
+    std::ifstream file(filename);
+
+    if(!file.is_open()) {
+        std::cerr << filename << " 여는데 에러가 발생했습니다!" << std::endl;
+        return movies;
+    }
+
+    return movies;
+}
+
+void Manager::loadUsersFromFile(const std::string& filename) const {
+    (void)filename;
+}
+
+void Manager::loadRatingsFromFile(const std::string& filename) const {
+    (void)filename;
 }

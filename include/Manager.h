@@ -35,4 +35,16 @@ class Manager {
     void printMovieList() const;
     void printMovieList(const std::vector<Movie>& sorted) const;
     void printUserList() const;
+
+    // CSV 파일에 저장
+    void saveMoviesToFile(const std::string& filename) const;
+    void saveUsersToFile(const std::string& filename) const;
+    void saveRatingsToFile(const std::string& filename) const;
+
+    // CSV 파일에서 로드
+    std::vector<Movie> loadMoviesFromFile(const std::string& filename) const;
+    void loadUsersFromFile(const std::string& filename) const;
+    void loadRatingsFromFile(const std::string& filename) const;
 };
+
+
