@@ -24,6 +24,7 @@ class Manager {
 
     void addMovie(int id, const std::string& title, const std::string& genre,
                   int year);
+    void findMovie(const std::string& title);
     void addUser(int id, const std::string& name, const std::string& email);
     void addRating(int userId, int movieId, double score);
 

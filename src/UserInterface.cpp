@@ -110,15 +110,7 @@ void findMovieByTitle(Manager& m) {
     cout << "찾으려는 영화 제목을 입력하세요\n> ";
     getline(cin, title);
 
-    
-
-    Movie* movie = m.findMovieByTitle(title);
-
-    if(movie == nullptr) {
-        cout << "존재하지 않는 영화입니다\n";
-    } else {
-        cout << *movie;
-    }
+    m.findMovie(title);
 }
 
 // 3. 전체 영화 목록 출력

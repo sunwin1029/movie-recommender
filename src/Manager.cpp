@@ -32,6 +32,17 @@ void Manager::addMovie(int id, const std::string& title,
     std::cout << "영화 등록이 성공했습니다!\n";
 }
 
+void Manager::findMovie(const std::string& title) {
+    Movie* movie = movieManager.findMovieByTitle(title);
+
+    if(movie == nullptr) {
+        std::cout << "존재하지 않는 영화입니다!\n";
+        return;
+    }
+
+    std::cout << *movie;
+}
+
 void Manager::addUser(int id, const std::string& name,
                       const std::string& email) {
     if(userManager.findUserById(id) != nullptr) {
