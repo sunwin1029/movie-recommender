@@ -1,5 +1,7 @@
 #include "Manager.h"
 
+#include <iostream>
+
 Manager::Manager() : movieManager(), ratingManager(), userManager() {}
 
 void Manager::loadAll() {
@@ -14,46 +16,49 @@ void Manager::saveAll() const {
     ratingManager.saveToFile("data/ratings.csv");
 }
 
-bool Manager::addMovie(int id, const std::string& title,
+void Manager::addMovie(int id, const std::string& title,
                        const std::string& genre, int year) {
     if(movieManager.findMovieById(id) != nullptr) {
         std::cout << "이미 존재하는 영화입니다!\n";
-        return false;
+        return;
     }
 
     if(year < 1888 || year > 2100) {
         std::cout << "잘못된 연도 범위입니다!\n";
-        return false;
+        return;
     }
 
     movieManager.addMovie(id, title, genre, year);
-    return true;
+    std::cout << "영화 등록이 성공했습니다!\n";
 }
 
-bool Manager::addUser(int id, const std::string& name,
+void Manager::addUser(int id, const std::string& name,
                       const std::string& email) {
     if(userManager.findUserById(id) != nullptr) {
-        return false;
+        std::cout << "이미 존재하는 사용자입니다!\n";
+        return;
     }
 
     userManager.addUser(id, name, email);
-    return true;
+    std::cout << "사용자 등록이 성공했습니다!\n";
 }
 
-bool Manager::addRating(int userId, int movieId, double score) {
+void Manager::addRating(int userId, int movieId, double score) {
     Movie* movie = movieManager.findMovieById(movieId);
     User* user = userManager.findUserById(userId);
 
     if(movie == nullptr || user == nullptr) {
-        return false;
+        std::cout << "등록되지 않은 영화 또는 사용자입니다!\n";
+        return;
     }
 
     if(!movie->addRating(score)) {
-        return false;
+        std::cout << "잘못된 평점 범위입니다!\n";
+        return;
     }
 
     ratingManager.addRating(userId, movieId, score);
-    return true;
+    std::cout << "평점 등록이 성공했습니다!\n";
 }
 
 void Manager::printMovieList() const { movieManager.printMovieList(); }
@@ -65,13 +70,8 @@ void Manager::printMovieList(const std::vector<Movie>& sorted) const {
 void Manager::printUserList() const { userManager.printUsers(); }
 
 Movie* Manager::findMovieByTitle(const std::string& title) {
-    
     return movieManager.findMovieByTitle(title);
 }
-
-Movie* Manager::findMovieById(int id) { return movieManager.findMovieById(id); }
-
-User* Manager::findUserById(int id) { return userManager.findUserById(id); }
 
 std::vector<Movie> Manager::getSortedMovies() const {
     return movieManager.getSortedMovies();
@@ -79,28 +79,4 @@ std::vector<Movie> Manager::getSortedMovies() const {
 
 std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
     return ratingManager.getRatingsofMovie(movie);
-}
-
-void Manager::saveMoviesToFile(const std::string& filename) const {
-    movieManager.saveToFile(filename);
-}
-
-void Manager::saveUsersToFile(const std::string& filename) const {
-    userManager.saveToFile(filename);
-}
-
-void Manager::saveRatingsToFile(const std::string& filename) const {
-    ratingManager.saveToFile(filename);
-}
-
-void Manager::loadMoviesFromFile(const std::string& filename) {
-    movieManager.loadFromFile(filename);
-}
-
-void Manager::loadUsersFromFile(const std::string& filename) {
-    userManager.loadFromFile(filename);
-}
-
-void Manager::loadRatingsFromFile(const std::string& filename) {
-    ratingManager.loadFromFile(filename);
 }
