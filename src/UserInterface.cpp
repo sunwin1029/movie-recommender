@@ -1,5 +1,7 @@
 #include "UserInterface.h"
 
+using namespace std;
+
 // 프로그램 전체 프로세스
 void program(Manager& m) {
     int menu = -1;
@@ -49,7 +51,7 @@ void execute(int menu, Manager& m) {
             break;
         case 8:
             // 영화별 평점 보기
-            getRatingsofMovie(m);
+            printRatingsOfMovie(m);
             break;
         case 9:
             // 도움말 출력
@@ -178,7 +180,7 @@ void addRating(Manager& m) {
 }
 
 // 8. 영화별 평점 보기
-void getRatingsofMovie(Manager& m) {
+void printRatingsOfMovie(Manager& m) {
     int movieId = getInteger("영화 id는 정수값입니다!\n",
                              "평점 목록을 확인할 영화 id를 입력해주세요\n> ");
 

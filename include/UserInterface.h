@@ -1,14 +1,11 @@
 #pragma once
 
-#include "Movie.h"
-#include "Rating.h"
-#include "User.h"
+#include <string>
+
 #include "Manager.h"
 
-using namespace std;
-
 void program(Manager& m);
-void execute(int menu, Manager &m);
+void execute(int menu, Manager& m);
 void printMenu();
 
 void addMovie(Manager& m);
@@ -18,6 +15,6 @@ void printSortedMovies(Manager& m);
 void addUser(Manager& m);
 void printUsers(Manager& m);
 void addRating(Manager& m);
-void getRatingsofMovie(Manager& m);
+void printRatingsOfMovie(Manager& m);
 int getInteger(const std::string& warningMessage,
                const std::string& stringRequireMessage);

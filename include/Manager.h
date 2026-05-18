@@ -1,12 +1,8 @@
 #pragma once
 #include <string>
-#include <vector>
 
-#include "Movie.h"
 #include "MovieManager.h"
-#include "Rating.h"
 #include "RatingManager.h"
-#include "User.h"
 #include "UserManager.h"
 
 class Manager {
