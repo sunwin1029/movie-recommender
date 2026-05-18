@@ -17,10 +17,12 @@ void Manager::saveAll() const {
 bool Manager::addMovie(int id, const std::string& title,
                        const std::string& genre, int year) {
     if(movieManager.findMovieById(id) != nullptr) {
+        std::cout << "이미 존재하는 영화입니다!\n";
         return false;
     }
 
     if(year < 1888 || year > 2100) {
+        std::cout << "잘못된 연도 범위입니다!\n";
         return false;
     }
 
@@ -63,6 +65,7 @@ void Manager::printMovieList(const std::vector<Movie>& sorted) const {
 void Manager::printUserList() const { userManager.printUsers(); }
 
 Movie* Manager::findMovieByTitle(const std::string& title) {
+    
     return movieManager.findMovieByTitle(title);
 }
 

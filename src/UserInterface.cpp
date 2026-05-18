@@ -99,6 +99,7 @@ void addMovie(Manager& m) {
     year = getInteger("잘못된 개봉연도입니다! 정수형으로 입력해주세요\n",
                       "영화 개봉연도를 입력하세요\n> ");
 
+    // 실제 영화 등록
     m.addMovie(id, title, genre, year);
 }
 
