@@ -68,5 +68,5 @@ void UserManager::saveToFile(const std::string& filename) const {
 }
 
 int UserManager::size() const {
-    return static_cast<int>(users.size());
+    return users.size();
 }

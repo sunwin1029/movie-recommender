@@ -112,6 +112,4 @@ void MovieManager::saveToFile(const std::string& filename) const {
     }
 }
 
-int MovieManager::size() const {
-    return movies.size();
-}
+int MovieManager::size() const { return movies.size(); }
