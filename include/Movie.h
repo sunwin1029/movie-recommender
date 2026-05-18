@@ -21,7 +21,7 @@ class Movie {
     double getAverageRating() const;  // getRating → getAverageRating
     int getRatingCount() const;       // 추가
 
-    bool addRating(double r);  // 추가
+    void addRating(double r);  // 추가
     void setReleaseYear(int year);
     bool operator<(const Movie& other) const;
     bool operator==(const Movie& other) const;

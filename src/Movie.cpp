@@ -28,14 +28,9 @@ int Movie::getReleaseYear() const { return releaseYear; }
 
 int Movie::getRatingCount() const { return ratingCount; }
 
-bool Movie::addRating(double r) {
-    // 유효성 검사
-    if(r < 0.0 || r > 5.0) {
-        return false;
-    }
+void Movie::addRating(double r) {
     totalRating += r;
     ratingCount++;
-    return true;
 }
 
 std::ostream& operator<<(std::ostream& os, const Movie& m) {

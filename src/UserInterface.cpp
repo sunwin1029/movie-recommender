@@ -150,21 +150,17 @@ void printUsers(Manager& m) {
 // 7. 평점 입력
 void addRating(Manager& m) {
     int userId;
-    string movieName;
+    int movieId;
     double score;
 
-    Movie* movie;
-
-    // 영화 제목 기반 영화 찾기
-    cout << "평점을 입력할 영화 제목을 입력해주세요!\n";
-    getline(cin, movieName);
-
-    // 사용자 id 기반 사용자 찾기
     userId = getInteger("사용자 id는 정수값입니다!\n",
-                        "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
+                        "평점을 등록할 사용자 id를 입력해주세요\n> ");
+
+    movieId = getInteger("영화 id는 정수값입니다!\n",
+                         "평점을 등록할 영화 id를 입력해주세요\n> ");
 
     while(true) {
-        cout << "영화의 평점을 입력해주세요\n";
+        cout << "영화의 평점을 입력해주세요\n> ";
         cin >> score;
 
         if(cin.fail()) {
@@ -178,7 +174,7 @@ void addRating(Manager& m) {
         break;
     }
 
-    m.addRating(userId, movie->getId(), score);
+    m.addRating(userId, movieId, score);
 }
 
 // 8. 영화별 평점 보기

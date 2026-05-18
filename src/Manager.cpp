@@ -79,11 +79,19 @@ void Manager::addRating(int userId, int movieId, double score) {
         return;
     }
 
-    if(!movie->addRating(score)) {
+    if(score < 0.0 || score > 5.0) {
         std::cout << "잘못된 평점 범위입니다!\n";
         return;
     }
 
+    movie->addRating(score);
     ratingManager.addRating(userId, movieId, score);
-    std::cout << "평점 등록이 성공했습니다!\n";
+}
+
+Movie* Manager::findMovieByTitle(const std::string& title) {
+    return movieManager.findMovieByTitle(title);
+}
+
+std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
+    return ratingManager.getRatingsofMovie(movie);
 }
