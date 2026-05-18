@@ -122,7 +122,7 @@ void printAllMovies(Manager& m) {
 // 4. 평점순 정렬 출력
 void printSortedMovies(Manager& m) {
     cout << "[평점순 영화 목록입니다]\n\n";
-    m.printMovieList(m.getSortedMovies());
+    m.printSortedMovieList();
 }
 
 // 5. 사용자 추가
@@ -158,11 +158,6 @@ void addRating(Manager& m) {
     // 영화 제목 기반 영화 찾기
     cout << "평점을 입력할 영화 제목을 입력해주세요!\n";
     getline(cin, movieName);
-
-    if((movie = m.findMovieByTitle(movieName)) == nullptr) {
-        cout << "등록되지 않은 영화입니다!\n";
-        return;
-    }
 
     // 사용자 id 기반 사용자 찾기
     userId = getInteger("사용자 id는 정수값입니다!\n",

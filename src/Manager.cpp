@@ -4,18 +4,21 @@
 
 Manager::Manager() : movieManager(), ratingManager(), userManager() {}
 
+// CSV 파일 로드
 void Manager::loadAll() {
     movieManager.loadFromFile("data/movies.csv");
     userManager.loadFromFile("data/users.csv");
     ratingManager.loadFromFile("data/ratings.csv");
 }
 
+// CSV 파일에 저장
 void Manager::saveAll() const {
     movieManager.saveToFile("data/movies.csv");
     userManager.saveToFile("data/users.csv");
     ratingManager.saveToFile("data/ratings.csv");
 }
 
+// 1. 영화 추가
 void Manager::addMovie(int id, const std::string& title,
                        const std::string& genre, int year) {
     if(movieManager.findMovieById(id) != nullptr) {
@@ -29,9 +32,9 @@ void Manager::addMovie(int id, const std::string& title,
     }
 
     movieManager.addMovie(id, title, genre, year);
-    std::cout << "영화 등록이 성공했습니다!\n";
 }
 
+// 2. 제목으로 검색
 void Manager::findMovie(const std::string& title) {
     Movie* movie = movieManager.findMovieByTitle(title);
 
@@ -43,17 +46,30 @@ void Manager::findMovie(const std::string& title) {
     std::cout << *movie;
 }
 
+// 3. 전체 영화 목록 출력
+void Manager::printMovieList() const { movieManager.printMovieList(); }
+
+// 4. 평점순 영화 목록 출력
+void Manager::printSortedMovieList() const {
+    movieManager.printMovieList(movieManager.getSortedMovies());
+}
+
+// 5. 사용자 추가
 void Manager::addUser(int id, const std::string& name,
                       const std::string& email) {
     if(userManager.findUserById(id) != nullptr) {
         std::cout << "이미 존재하는 사용자입니다!\n";
         return;
     }
-
     userManager.addUser(id, name, email);
-    std::cout << "사용자 등록이 성공했습니다!\n";
 }
 
+// 6. 사용자 목록 출력
+void Manager::printUserList() const {
+    userManager.printUsers();
+}
+
+// 7. 평점 입력
 void Manager::addRating(int userId, int movieId, double score) {
     Movie* movie = movieManager.findMovieById(movieId);
     User* user = userManager.findUserById(userId);
@@ -70,24 +86,4 @@ void Manager::addRating(int userId, int movieId, double score) {
 
     ratingManager.addRating(userId, movieId, score);
     std::cout << "평점 등록이 성공했습니다!\n";
-}
-
-void Manager::printMovieList() const { movieManager.printMovieList(); }
-
-void Manager::printMovieList(const std::vector<Movie>& sorted) const {
-    movieManager.printMovieList(sorted);
-}
-
-void Manager::printUserList() const { userManager.printUsers(); }
-
-Movie* Manager::findMovieByTitle(const std::string& title) {
-    return movieManager.findMovieByTitle(title);
-}
-
-std::vector<Movie> Manager::getSortedMovies() const {
-    return movieManager.getSortedMovies();
-}
-
-std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
-    return ratingManager.getRatingsofMovie(movie);
 }
