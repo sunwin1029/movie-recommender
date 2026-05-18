@@ -10,7 +10,13 @@ void Manager::loadAll() {
     userManager.loadFromFile("data/users.csv");
     ratingManager.loadFromFile("data/ratings.csv");
 
-    for(const Rating& rating)
+    for(const Rating &rating : ratingManager.getRatings()) {
+        Movie* movie = movieManager.findMovieById(rating.getMovieId());
+
+        if(movie != nullptr) {
+            movie->addRating(rating.getScore());
+        }
+    }
 }
 
 // CSV 파일에 저장

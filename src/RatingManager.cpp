@@ -10,6 +10,10 @@ void RatingManager::addRating(int userId, int movieId, double score) {
     ratings.emplace_back(Rating(userId, movieId, score));
 }
 
+const std::vector<Rating>& RatingManager::getRatings() const {
+    return ratings;
+}
+
 void RatingManager::printRatingsOfMovie(int movieId) const {
     bool found = false;
 
