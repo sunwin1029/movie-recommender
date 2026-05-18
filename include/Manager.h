@@ -1,25 +1,31 @@
 #pragma once
-#include <algorithm>
-#include <iostream>
+#include <string>
 #include <vector>
 
 #include "Movie.h"
+#include "MovieManager.h"
 #include "Rating.h"
+#include "RatingManager.h"
 #include "User.h"
+#include "UserManager.h"
 
 class Manager {
    private:
-    std::vector<Movie> movies;
-    std::vector<Rating> ratings;
-    std::vector<User> users;
+    MovieManager movieManager;
+    RatingManager ratingManager;
+    UserManager userManager;
 
    public:
     Manager();
 
-    void addMovie(int id, const std::string& title, const std::string& genre,
+    // 전체 파일들을 load/save
+    void loadAll();
+    void saveAll() const;
+
+    bool addMovie(int id, const std::string& title, const std::string& genre,
                   int year);
-    void addUser(int id, const std::string& name, const std::string& email);
-    void addRating(int userId, int movieId, double score);
+    bool addUser(int id, const std::string& name, const std::string& email);
+    bool addRating(int userId, int movieId, double score);
 
     // id 기반 Movie, User, Rating 객체 찾기
     Movie* findMovieById(int id);
@@ -42,9 +48,8 @@ class Manager {
     void saveRatingsToFile(const std::string& filename) const;
 
     // CSV 파일에서 로드
-    std::vector<Movie> loadMoviesFromFile(const std::string& filename) const;
-    void loadUsersFromFile(const std::string& filename) const;
-    void loadRatingsFromFile(const std::string& filename) const;
+    void loadMoviesFromFile(const std::string& filename);
+    void loadUsersFromFile(const std::string& filename);
+    void loadRatingsFromFile(const std::string& filename);
 };
-
 

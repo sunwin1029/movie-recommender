@@ -12,6 +12,20 @@ void UserManager::addUser(int id, const std::string& name,
     users.emplace_back(user);
 }
 
+void UserManager::printUsers() const {
+    if(users.size() < 1) {
+        std::cout << "사용자 목록이 존재하지 않습니다!\n";
+        return;
+    }
+
+    for(const User& user : users) {
+        std::cout << user;
+    }
+
+    std::cout << "\n";
+}
+
+
 User* UserManager::findUserById(int id) {
     for(User& u : users) {
         if(u.getId() == id) {

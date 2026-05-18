@@ -13,6 +13,7 @@ class UserManager : public BaseManager {
     UserManager();
 
     void addUser(int id, const std::string& name, const std::string& email);
+    void printUsers() const;
 
     User* findUserById(int id);
 

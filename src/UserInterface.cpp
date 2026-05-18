@@ -83,18 +83,9 @@ void addMovie(Manager& m) {
     int id, year;
     string title, genre;
 
-    // id 입력받기(중복 검사)
-    while(true) {
-        id = getInteger("잘못된 id입니다! 정수형으로 입력해주세요\n",
-                        "영화 id를 입력하세요\n> ");
-
-        if(m.findMovieById(id) != nullptr) {
-            cout << "중복된 id입니다!\n";
-            continue;
-        }
-
-        break;
-    }
+    // id 입력받기
+    id = getInteger("잘못된 id입니다! 정수형으로 입력해주세요\n",
+                    "영화 id를 입력하세요\n> ");
 
     // 영화 제목 입력받기
     cout << "영화 제목을 입력하세요\n> ";
@@ -104,18 +95,9 @@ void addMovie(Manager& m) {
     cout << "영화 장르를 입력하세요\n> ";
     getline(cin, genre);
 
-    // 개봉연도 입력받기(범위 검사)
-    while(true) {
-        year = getInteger("잘못된 개봉연도입니다! 정수형으로 입력해주세요\n",
-                          "영화 개봉연도를 입력하세요\n> ");
-
-        if(year < 1888 || year > 2100) {
-            cout << "유효하지 않는 연도가 입력됐습니다! \n";
-            continue;
-        }
-
-        break;
-    }
+    // 개봉연도 입력받기
+    year = getInteger("잘못된 개봉연도입니다! 정수형으로 입력해주세요\n",
+                      "영화 개봉연도를 입력하세요\n> ");
 
     m.addMovie(id, title, genre, year);
 }
@@ -155,13 +137,6 @@ void addUser(Manager& m) {
 
     id = getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
 
-    // 중복 id 방지
-    while(m.findUserById(id) != nullptr) {
-        cout << "중복된 사용자입니다!";
-        id =
-            getInteger("id는 정수형 타입입니다!", "사용자 id를 입력하세요\n> ");
-    }
-
     cout << "사용자 이름을 입력하세요\n> ";
     getline(cin, name);
 
@@ -184,7 +159,7 @@ void addRating(Manager& m) {
     double score;
 
     Movie* movie;
-    User* user;
+
     // 영화 제목 기반 영화 찾기
     cout << "평점을 입력할 영화 제목을 입력해주세요!\n";
     getline(cin, movieName);
@@ -197,10 +172,6 @@ void addRating(Manager& m) {
     // 사용자 id 기반 사용자 찾기
     userId = getInteger("사용자 id는 정수값입니다!\n",
                         "평점을 등록하고 싶은 사용자의 id를 알려주세요\n");
-    if((user = m.findUserById(userId)) == nullptr) {
-        cout << "등록되지 않은 사용자입니다!\n";
-        return;
-    }
 
     while(true) {
         cout << "영화의 평점을 입력해주세요\n";

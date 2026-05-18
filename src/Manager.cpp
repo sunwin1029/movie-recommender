@@ -1,139 +1,103 @@
 #include "Manager.h"
-#include <fstream>
-#include <sstream>
-using namespace std;
 
-Manager::Manager()
-    : movies(std::vector<Movie>()),
-      ratings(std::vector<Rating>()),
-      users(std::vector<User>()) {}
+Manager::Manager() : movieManager(), ratingManager(), userManager() {}
 
-void Manager::addMovie(int id, const std::string& title,
+void Manager::loadAll() {
+    movieManager.loadFromFile("data/movies.csv");
+    userManager.loadFromFile("data/users.csv");
+    ratingManager.loadFromFile("data/ratings.csv");
+}
+
+void Manager::saveAll() const {
+    movieManager.saveToFile("data/movies.csv");
+    userManager.saveToFile("data/users.csv");
+    ratingManager.saveToFile("data/ratings.csv");
+}
+
+bool Manager::addMovie(int id, const std::string& title,
                        const std::string& genre, int year) {
-    Movie movie = Movie(id, title, genre, year);
-                    
-    movies.emplace_back(movie);
+    if(movieManager.findMovieById(id) != nullptr) {
+        return false;
+    }
+
+    if(year < 1888 || year > 2100) {
+        return false;
+    }
+
+    movieManager.addMovie(id, title, genre, year);
+    return true;
 }
 
-void Manager::addUser(int id, const std::string& name,
+bool Manager::addUser(int id, const std::string& name,
                       const std::string& email) {
-    users.emplace_back(User(id, name, email));
+    if(userManager.findUserById(id) != nullptr) {
+        return false;
+    }
+
+    userManager.addUser(id, name, email);
+    return true;
 }
 
-void Manager::addRating(int userId, int movieId, double score) {
-    Movie* m = findMovieById(movieId);
-    User* u = findUserById(userId);
+bool Manager::addRating(int userId, int movieId, double score) {
+    Movie* movie = movieManager.findMovieById(movieId);
+    User* user = userManager.findUserById(userId);
 
-    if(m == nullptr || u == nullptr) {
-        std::cout << "잘못된 입력입니다!\n";
-        return;
+    if(movie == nullptr || user == nullptr) {
+        return false;
     }
 
-    if(!(m->addRating(score))) {
-        std::cout << "점수 범위가 잘못됐습니다!\n";
-        return;
+    if(!movie->addRating(score)) {
+        return false;
     }
 
-    ratings.emplace_back(Rating(userId, movieId, score));
+    ratingManager.addRating(userId, movieId, score);
+    return true;
 }
 
-void Manager::printMovieList() const {
-    if(movies.size() < 1) {
-        std::cout << "영화 목록이 존재하지 않습니다!\n";
-        return;
-    }
-    for(const Movie& m : movies) {
-        std::cout << m;
-    }
-    std::cout << "\n";
-}
+void Manager::printMovieList() const { movieManager.printMovieList(); }
 
-// 후처리된 영화 목록을 출력하고 싶은 경우
 void Manager::printMovieList(const std::vector<Movie>& sorted) const {
-    if(sorted.size() < 1) {
-        std::cout << "영화 목록이 존재하지 않습니다!\n";
-        return;
-    }
-    for(const Movie& m : sorted) {
-        std::cout << m;
-    }
-    std::cout << "\n";
+    movieManager.printMovieList(sorted);
 }
 
-void Manager::printUserList() const {
-    if(users.size() < 1) {
-        std::cout << "사용자 목록이 존재하지 않습니다!\n";
-        return; 
-    }
-    for(const User& u : users) {
-        std::cout << u;
-    }
-}
+void Manager::printUserList() const { userManager.printUsers(); }
 
 Movie* Manager::findMovieByTitle(const std::string& title) {
-    for(Movie& m : movies) {
-        if(m.getTitle() == title) {
-            return &m;
-        }
-    }
-    return nullptr;
+    return movieManager.findMovieByTitle(title);
 }
 
-Movie* Manager::findMovieById(int id) {
-    for(Movie& m : movies) {
-        if(m.getId() == id) {
-            return &m;
-        }
-    }
-    return nullptr;
-}
+Movie* Manager::findMovieById(int id) { return movieManager.findMovieById(id); }
 
-User* Manager::findUserById(int id) {
-    for(User& u : users) {
-        if(u.getId() == id) {
-            return &u;
-        }
-    }
-    return nullptr;
-}
+User* Manager::findUserById(int id) { return userManager.findUserById(id); }
 
 std::vector<Movie> Manager::getSortedMovies() const {
-    std::vector<Movie> sorted = movies;
-    std::sort(sorted.begin(), sorted.end());
-
-    return sorted;
+    return movieManager.getSortedMovies();
 }
 
 std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
-    std::vector<Rating> eachMovieRatings;
-
-    int movieId = movie.getId();
-
-    for(const Rating& r : ratings) {
-        if(r.getMovieId() == movieId) {
-            eachMovieRatings.push_back(r);
-        }
-    }
-
-    return eachMovieRatings;
+    return ratingManager.getRatingsofMovie(movie);
 }
 
-std::vector<Movie> Manager::loadMoviesFromFile(const std::string& filename) const {
-    std::vector<Movie> movies;
-    std::ifstream file(filename);
-
-    if(!file.is_open()) {
-        std::cerr << filename << " 여는데 에러가 발생했습니다!" << std::endl;
-        return movies;
-    }
-
-    return movies;
+void Manager::saveMoviesToFile(const std::string& filename) const {
+    movieManager.saveToFile(filename);
 }
 
-void Manager::loadUsersFromFile(const std::string& filename) const {
-    (void)filename;
+void Manager::saveUsersToFile(const std::string& filename) const {
+    userManager.saveToFile(filename);
 }
 
-void Manager::loadRatingsFromFile(const std::string& filename) const {
-    (void)filename;
+void Manager::saveRatingsToFile(const std::string& filename) const {
+    ratingManager.saveToFile(filename);
+}
+
+void Manager::loadMoviesFromFile(const std::string& filename) {
+    movieManager.loadFromFile(filename);
+}
+
+void Manager::loadUsersFromFile(const std::string& filename) {
+    userManager.loadFromFile(filename);
+}
+
+void Manager::loadRatingsFromFile(const std::string& filename) {
+    ratingManager.loadFromFile(filename);
 }
