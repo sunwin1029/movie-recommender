@@ -88,10 +88,15 @@ void Manager::addRating(int userId, int movieId, double score) {
     ratingManager.addRating(userId, movieId, score);
 }
 
-Movie* Manager::findMovieByTitle(const std::string& title) {
-    return movieManager.findMovieByTitle(title);
-}
+// 8. 영화별 평점 보기
+void Manager::printRatingsOfMovie(int movieId) {
+    Movie* movie = movieManager.findMovieById(movieId);
 
-std::vector<Rating> Manager::getRatingsofMovie(const Movie& movie) const {
-    return ratingManager.getRatingsofMovie(movie);
+    if(movie == nullptr) {
+        std::cout << "등록되지 않은 영화입니다!\n";
+        return;
+    }
+
+    std::cout << movie->getTitle() << " 의 평점 목록입니다.\n";
+    ratingManager.printRatingsOfMovie(movieId);
 }

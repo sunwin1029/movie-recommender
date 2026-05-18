@@ -4,7 +4,6 @@
 
 #include "BaseManager.h"
 #include "Rating.h"
-#include "Movie.h"
 
 class RatingManager : public BaseManager {
    private:
@@ -14,7 +13,7 @@ class RatingManager : public BaseManager {
     RatingManager();
 
     void addRating(int userId, int movieId, double score);
-    std::vector<Rating> getRatingsofMovie(const Movie& movie) const;
+    void printRatingsOfMovie(int movieId) const;
 
     void loadFromFile(const std::string& filename) override;
     void saveToFile(const std::string& filename) const override;

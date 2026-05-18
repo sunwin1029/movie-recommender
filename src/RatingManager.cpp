@@ -1,12 +1,8 @@
 #include "RatingManager.h"
 
-#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-
-#include "MovieManager.h"
-#include "UserManager.h"
 
 RatingManager::RatingManager() : ratings(std::vector<Rating>()) {}
 
@@ -14,8 +10,19 @@ void RatingManager::addRating(int userId, int movieId, double score) {
     ratings.emplace_back(Rating(userId, movieId, score));
 }
 
-std::vector<Rating> RatingManager::getRatingsofMovie(const Movie& movie) const {
+void RatingManager::printRatingsOfMovie(int movieId) const {
+    bool found = false;
 
+    for(const Rating& rating : ratings) {
+        if(rating.getMovieId() == movieId) {
+            std::cout << rating << std::endl;
+            found = true;
+        }
+    }
+
+    if(!found) {
+        std::cout << "해당 영화는 아직 평점이 없습니다!\n";
+    }
 }
 
 void RatingManager::loadFromFile(const std::string& filename) {

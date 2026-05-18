@@ -179,42 +179,10 @@ void addRating(Manager& m) {
 
 // 8. 영화별 평점 보기
 void getRatingsofMovie(Manager& m) {
-    string movieName;  // 영화 제목
-    Movie* movie;      // 영화 객체
+    int movieId = getInteger("영화 id는 정수값입니다!\n",
+                             "평점 목록을 확인할 영화 id를 입력해주세요\n> ");
 
-    cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : -1)\n";
-    getline(cin, movieName);
-
-    if(movieName == "-1") {
-        return;
-    }
-
-    movie = m.findMovieByTitle(movieName);
-
-    while(movie == nullptr) {
-        cout << "등록되지 않은 영화입니다\n";
-        cout << "평점 목록을 확인하고 싶은 영화 이름을 입력해주세요(종료 : "
-                "-1)\n";
-        getline(cin, movieName);
-
-        if(movieName == "-1") {
-            return;
-        }
-
-        movie = m.findMovieByTitle(movieName);
-    }
-
-    std::vector<Rating> ratingList = m.getRatingsofMovie(*movie);
-
-    if(ratingList.size() < 1) {
-        cout << movie->getTitle() << " 은 아직 평점이 없습니다!\n";
-    } else {
-        cout << movie->getTitle() << " 의 평점 목록입니다.\n";
-    }
-
-    for(Rating& r : ratingList) {
-        cout << r << std::endl;
-    }
+    m.printRatingsOfMovie(movieId);
 }
 
 // 정수값 검증 함수
