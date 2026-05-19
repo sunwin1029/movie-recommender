@@ -25,6 +25,10 @@ void UserManager::printUsers() const {
     std::cout << "\n";
 }
 
+const std::vector<User>& UserManager::getUsers() const {
+    return users;
+}
+
 
 User* UserManager::findUserById(int id) {
     for(User& u : users) {

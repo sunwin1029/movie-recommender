@@ -39,6 +39,10 @@ std::vector<Movie> MovieManager::getSortedMovies() const {
     return sorted;
 }
 
+const std::vector<Movie>& MovieManager::getMovies() const {
+    return movies;
+}
+
 void MovieManager::printMovieList() const {
     if(movies.size() < 1) {
         std::cout << "영화 목록이 존재하지 않습니다!\n";

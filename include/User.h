@@ -15,6 +15,7 @@ class User {
     int getId() const;
     std::string getName() const;
     std::string getEmail() const;
+    
 };
 
 std::ostream& operator<<(std::ostream& os, const User& u);

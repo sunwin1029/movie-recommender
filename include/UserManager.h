@@ -13,7 +13,9 @@ class UserManager : public BaseManager {
     UserManager();
 
     void addUser(int id, const std::string& name, const std::string& email);
+    
     void printUsers() const;
+    const std::vector<User>& getUsers() const;
 
     User* findUserById(int id);
 

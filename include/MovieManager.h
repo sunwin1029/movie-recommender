@@ -19,6 +19,7 @@ class MovieManager : public BaseManager {
     Movie* findMovieByTitle(const std::string& title);
 
     std::vector<Movie> getSortedMovies() const;
+    const std::vector<Movie>& getMovies() const;
 
     void printMovieList() const;
     void printMovieList(const std::vector<Movie>& movieList) const;

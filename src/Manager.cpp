@@ -108,3 +108,13 @@ void Manager::printRatingsOfMovie(int movieId) {
     std::cout << movie->getTitle() << " 의 평점 목록입니다.\n";
     ratingManager.printRatingsOfMovie(movieId);
 }
+
+
+void Manager::recommendMovies(int userId, int amt) {
+    User* user = userManager.findUserById(userId);
+
+    if(user == nullptr) {
+        std::cout << "등록되지 않은 사용자입니다!\n";
+        return;
+    }
+}

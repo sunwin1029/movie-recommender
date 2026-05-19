@@ -4,6 +4,7 @@
 #include "MovieManager.h"
 #include "RatingManager.h"
 #include "UserManager.h"
+#include "Recommender.h"
 
 class Manager {
    private:
@@ -24,6 +25,7 @@ class Manager {
     void addUser(int id, const std::string& name, const std::string& email);
     void addRating(int userId, int movieId, double score);
     void printRatingsOfMovie(int movieId);
+    void recommendMovies(int userId, int amt);
 
     void printMovieList() const;
     void printSortedMovieList() const;
