@@ -4,16 +4,21 @@
 #include <iostream>
 #include <sstream>
 
+// 생성자
 RatingManager::RatingManager() : ratings(std::vector<Rating>()) {}
 
+
+// 평점 추가
 void RatingManager::addRating(int userId, int movieId, double score) {
     ratings.emplace_back(Rating(userId, movieId, score));
 }
 
+// 평점 목록 반환
 const std::vector<Rating>& RatingManager::getRatings() const {
     return ratings;
 }
 
+// 사용자별 평점 반환
 std::vector<Rating> RatingManager::getRatingsByUser(int userId) const {
     std::vector <Rating> userRating;
 
@@ -26,6 +31,7 @@ std::vector<Rating> RatingManager::getRatingsByUser(int userId) const {
     return userRating;
 }
 
+// 영화별 평점 출력
 void RatingManager::printRatingsOfMovie(int movieId) const {
     bool found = false;
 
@@ -41,6 +47,8 @@ void RatingManager::printRatingsOfMovie(int movieId) const {
     }
 }
 
+// ratings.csv에는 평균 평점이 아니라 사용자-영화-점수 형태의
+// 개별 평점만 저장한다. 평균 평점 계산은 Manager에서 영화와 연결해 처리한다.
 void RatingManager::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
 
@@ -73,6 +81,8 @@ void RatingManager::loadFromFile(const std::string& filename) {
     }
 }
 
+
+// CSV 파일 저장
 void RatingManager::saveToFile(const std::string& filename) const {
     std::ofstream file(filename);
 
@@ -89,4 +99,5 @@ void RatingManager::saveToFile(const std::string& filename) const {
     }
 }
 
+// 총 Rating 수 반환
 int RatingManager::size() const { return ratings.size(); }

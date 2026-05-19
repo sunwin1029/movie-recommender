@@ -28,6 +28,7 @@ std::vector<int> Recommender::recommend(int targetUserId,
             targetUserRatings.emplace_back(rating);
         }
     }
+    // 사용자가 본 영화가 없는 경우
     if(targetUserRatings.empty()) {
         return {};
     }
@@ -75,19 +76,23 @@ std::vector<int> Recommender::recommend(int targetUserId,
         int similarity = similarityPair.second;
 
         for(const Rating& rating : ratings) {
+            // 유사 사용자의 Rating 찾기
             if(rating.getUserId() != similarUserId) {
                 continue;
             }
 
+            // 타겟 사용자가 이미 본 영화인 경우
             if(targetUserWatchedMovies.find(rating.getMovieId()) !=
                targetUserWatchedMovies.end()) {
                 continue;
             }
 
+            // 추천할만한 영화가 아닌 경우 (유사 사용자가 안좋게 평가할 영화를 추천할 이유 없음)
             if(rating.getScore() < 3.0) {
                 continue;
             }
 
+            // 영화에 가중치 부여
             movieScores[rating.getMovieId()] +=
                 similarity * rating.getScore();
         }

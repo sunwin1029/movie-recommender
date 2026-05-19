@@ -6,14 +6,17 @@
 #include <sstream>
 #include <vector>
 
+// 생성자
 MovieManager::MovieManager() : movies(std::vector<Movie>()) {}
 
+// 영화 추가
 void MovieManager::addMovie(int id, const std::string& title,
                             const std::string& genre, int year) {
     Movie movie = Movie(id, title, genre, year);
     movies.emplace_back(movie);
 }
 
+// 제목으로 영화 검색
 Movie* MovieManager::findMovieByTitle(const std::string& title) {
     for(Movie& m : movies) {
         if(m.getTitle() == title) {
@@ -23,6 +26,7 @@ Movie* MovieManager::findMovieByTitle(const std::string& title) {
     return nullptr;
 }
 
+// id로 영화 검색
 Movie* MovieManager::findMovieById(int id) {
     for(Movie& m : movies) {
         if(m.getId() == id) {
@@ -32,6 +36,7 @@ Movie* MovieManager::findMovieById(int id) {
     return nullptr;
 }
 
+// 평점순 영화 목록 반환
 std::vector<Movie> MovieManager::getSortedMovies() const {
     std::vector<Movie> sorted = movies;
     std::sort(sorted.begin(), sorted.end());
@@ -39,10 +44,12 @@ std::vector<Movie> MovieManager::getSortedMovies() const {
     return sorted;
 }
 
+// 영화 목록 반환
 const std::vector<Movie>& MovieManager::getMovies() const {
     return movies;
 }
 
+// 영화 목록 출력
 void MovieManager::printMovieList() const {
     if(movies.size() < 1) {
         std::cout << "영화 목록이 존재하지 않습니다!\n";
@@ -54,7 +61,7 @@ void MovieManager::printMovieList() const {
     std::cout << "\n";
 }
 
-// 후처리된 영화 목록을 출력하고 싶은 경우
+// 전달받은 영화 목록 출력
 void MovieManager::printMovieList(const std::vector<Movie>& sorted) const {
     if(sorted.size() < 1) {
         std::cout << "영화 목록이 존재하지 않습니다!\n";
@@ -66,6 +73,7 @@ void MovieManager::printMovieList(const std::vector<Movie>& sorted) const {
     std::cout << "\n";
 }
 
+// CSV 파일 로드
 void MovieManager::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
 
@@ -100,6 +108,7 @@ void MovieManager::loadFromFile(const std::string& filename) {
     }
 }
 
+// CSV 파일 저장
 void MovieManager::saveToFile(const std::string& filename) const {
     std::ofstream file(filename);
 
@@ -116,4 +125,5 @@ void MovieManager::saveToFile(const std::string& filename) const {
     }
 }
 
+// 총 Movie 수 반환
 int MovieManager::size() const { return movies.size(); }
