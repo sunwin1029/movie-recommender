@@ -54,6 +54,10 @@ void execute(int menu, Manager& m) {
             printRatingsOfMovie(m);
             break;
         case 9:
+            // 영화 추천
+            recommendMovies(m);
+            break;
+        case 10:
             // 도움말 출력
             printMenu();
             break;
@@ -74,6 +78,10 @@ void printMenu() {
     cout << "[ 사용자 ]\n  5. 사용자 추가\n  6. 사용자 목록 출력\n\n";
 
     cout << "[ 평점 ]\n  7. 평점 입력\n  8. 영화별 평점 보기\n\n";
+
+    cout << "[ 추천 ]\n  9. 영화 추천 받기\n\n";
+
+    cout << "[ 도움말 ]\n  10. 메뉴 다시 보기\n\n";
 
     cout << "  0. 종료\n\n";
 
@@ -185,6 +193,14 @@ void printRatingsOfMovie(Manager& m) {
                              "평점 목록을 확인할 영화 id를 입력해주세요\n> ");
 
     m.printRatingsOfMovie(movieId);
+}
+
+// 10. 영화 추천 받기
+void recommendMovies(Manager& m) {
+    int userId = getInteger("사용자 id는 정수값입니다!\n",
+                            "추천받을 사용자 id를 입력해주세요\n> ");
+
+    m.recommendMovies(userId);
 }
 
 // 정수값 검증 함수

@@ -1,6 +1,9 @@
 #include "Manager.h"
 
 #include <iostream>
+#include <vector>
+
+#include "Recommender.h"
 
 Manager::Manager() : movieManager(), ratingManager(), userManager() {}
 
@@ -109,12 +112,32 @@ void Manager::printRatingsOfMovie(int movieId) {
     ratingManager.printRatingsOfMovie(movieId);
 }
 
-
-void Manager::recommendMovies(int userId, int amt) {
+// 9. 영화 추천 받기
+void Manager::recommendMovies(int userId) {
     User* user = userManager.findUserById(userId);
 
     if(user == nullptr) {
         std::cout << "등록되지 않은 사용자입니다!\n";
         return;
+    }
+
+    const int recommendCount = 3;
+    std::vector<int> recommendedMovieIds = Recommender::recommend(
+        userId, userManager.getUsers(), movieManager.getMovies(),
+        ratingManager.getRatings(), recommendCount);
+
+    if(recommendedMovieIds.empty()) {
+        std::cout << "추천할 영화가 없습니다!\n";
+        return;
+    }
+
+    std::cout << "[추천 영화 목록입니다]\n\n";
+
+    for(int movieId : recommendedMovieIds) {
+        Movie* movie = movieManager.findMovieById(movieId);
+
+        if(movie != nullptr) {
+            std::cout << *movie;
+        }
     }
 }

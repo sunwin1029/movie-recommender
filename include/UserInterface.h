@@ -16,5 +16,6 @@ void addUser(Manager& m);
 void printUsers(Manager& m);
 void addRating(Manager& m);
 void printRatingsOfMovie(Manager& m);
+void recommendMovies(Manager& m);
 int getInteger(const std::string& warningMessage,
                const std::string& stringRequireMessage);
