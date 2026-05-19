@@ -1,5 +1,6 @@
 # object 파일
 *.o
+obj/
 # 실행 파일
 movie_recommender
 # 맥
