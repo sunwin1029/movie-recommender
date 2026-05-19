@@ -14,6 +14,18 @@ const std::vector<Rating>& RatingManager::getRatings() const {
     return ratings;
 }
 
+std::vector<Rating>& RatingManager::getRatingsByUser(int userId) const {
+    std::vector <Rating> userRating;
+
+    for(const Rating& rating: ratings) {
+        if(rating.getUserId() == userId) {
+            userRating.emplace_back(rating);
+        }
+    }
+
+    return userRating;
+}
+
 void RatingManager::printRatingsOfMovie(int movieId) const {
     bool found = false;
 
