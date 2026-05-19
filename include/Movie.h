@@ -22,7 +22,6 @@ class Movie {
     int getRatingCount() const;       // 추가
 
     void addRating(double r);  // 추가
-    void setReleaseYear(int year);
     bool operator<(const Movie& other) const;
     bool operator==(const Movie& other) const;
 };

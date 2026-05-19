@@ -68,7 +68,7 @@ void execute(int menu, Manager& m) {
     }
 }
 
-// 9. 사용 설명서 출력
+// 10. 사용 설명서 출력
 void printMenu() {
     cout << "=== Movie Recommender ===\n";
 
@@ -195,7 +195,7 @@ void printRatingsOfMovie(Manager& m) {
     m.printRatingsOfMovie(movieId);
 }
 
-// 10. 영화 추천 받기
+// 9. 영화 추천 받기
 void recommendMovies(Manager& m) {
     int userId = getInteger("사용자 id는 정수값입니다!\n",
                             "추천받을 사용자 id를 입력해주세요\n> ");
@@ -203,7 +203,7 @@ void recommendMovies(Manager& m) {
     m.recommendMovies(userId);
 }
 
-// 정수값 검증 함수
+// 기타 : 정수값 검증 함수
 int getInteger(const std::string& warningMessage,
                const std::string& stringRequireMessage) {
     int val;

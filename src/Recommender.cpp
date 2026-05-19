@@ -15,7 +15,6 @@ bool Compare(const std::pair<int, int>& a, const std::pair<int, int>& b) {
 
 std::vector<int> Recommender::recommend(int targetUserId,
                                         const std::vector<User>& users,
-                                        const std::vector<Movie>& movies,
                                         const std::vector<Rating>& ratings,
                                         int movieAmt) {
     

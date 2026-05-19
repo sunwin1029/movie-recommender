@@ -13,6 +13,7 @@ void Manager::loadAll() {
     userManager.loadFromFile("data/users.csv");
     ratingManager.loadFromFile("data/ratings.csv");
 
+    // 영화별 평균 평점 계산
     for(const Rating &rating : ratingManager.getRatings()) {
         Movie* movie = movieManager.findMovieById(rating.getMovieId());
 
@@ -123,8 +124,8 @@ void Manager::recommendMovies(int userId) {
 
     const int recommendCount = 3;
     std::vector<int> recommendedMovieIds = Recommender::recommend(
-        userId, userManager.getUsers(), movieManager.getMovies(),
-        ratingManager.getRatings(), recommendCount);
+        userId, userManager.getUsers(), ratingManager.getRatings(),
+        recommendCount);
 
     if(recommendedMovieIds.empty()) {
         std::cout << "추천할 영화가 없습니다!\n";
