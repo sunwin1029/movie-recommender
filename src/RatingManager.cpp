@@ -14,7 +14,7 @@ const std::vector<Rating>& RatingManager::getRatings() const {
     return ratings;
 }
 
-std::vector<Rating>& RatingManager::getRatingsByUser(int userId) const {
+std::vector<Rating> RatingManager::getRatingsByUser(int userId) const {
     std::vector <Rating> userRating;
 
     for(const Rating& rating: ratings) {
