@@ -10,7 +10,7 @@ void program(Manager& m) {
 
     while(true) {
         menu = getInteger("잘못된 입력입니다!\n",
-                          "메뉴를 선택해주세요(도움말 : \"9\")\n");
+                          "메뉴를 선택해주세요(도움말 : \"10\")\n");
         if(menu == 0) break;
         execute(menu, m);
     }
