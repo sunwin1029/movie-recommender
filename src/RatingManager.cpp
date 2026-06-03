@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <sstream>
 
+#include "Constants.h"
+
 // 생성자
 RatingManager::RatingManager() : ratings(std::vector<Rating>()) {}
 
@@ -61,7 +63,7 @@ void RatingManager::loadFromFile(const std::string& filename) {
 
     std::string line;
     getline(file, line);  // header skip
-    int lineNum = 1;
+    int lineNum = AppConstants::CSV_HEADER_LINE;
 
     while(getline(file, line)) {
         lineNum++;
@@ -92,7 +94,8 @@ void RatingManager::loadFromFile(const std::string& filename) {
                 throw std::invalid_argument("평점 누락");
             }
             score = std::stod(token);
-            if(score < 0.0 || score > 5.0) {
+            if(score < AppConstants::MIN_RATING_SCORE ||
+               score > AppConstants::MAX_RATING_SCORE) {
                 throw std::out_of_range("평점 범위 오류");
             }
 

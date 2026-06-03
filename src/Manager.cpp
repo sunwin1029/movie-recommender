@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Constants.h"
 #include "Recommender.h"
 
 Manager::Manager() : movieManager(), ratingManager(), userManager() {}
@@ -52,7 +53,8 @@ void Manager::addMovie(int id, const std::string& title,
         return;
     }
 
-    if(year < 1888 || year > 2100) {
+    if(year < AppConstants::MIN_RELEASE_YEAR ||
+       year > AppConstants::MAX_RELEASE_YEAR) {
         std::cout << "잘못된 연도 범위입니다!\n";
         return;
     }
@@ -105,7 +107,8 @@ void Manager::addRating(int userId, int movieId, double score) {
         return;
     }
 
-    if(score < 0.0 || score > 5.0) {
+    if(score < AppConstants::MIN_RATING_SCORE ||
+       score > AppConstants::MAX_RATING_SCORE) {
         std::cout << "잘못된 평점 범위입니다!\n";
         return;
     }
@@ -136,10 +139,9 @@ void Manager::recommendMovies(int userId) {
         return;
     }
 
-    const int recommendCount = 3;
     std::vector<int> recommendedMovieIds = Recommender::recommend(
         userId, userManager.getUsers(), ratingManager.getRatings(),
-        recommendCount);
+        AppConstants::DEFAULT_RECOMMEND_COUNT);
 
     if(recommendedMovieIds.empty()) {
         std::cout << "추천할 영화가 없습니다!\n";

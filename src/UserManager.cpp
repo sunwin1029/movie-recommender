@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <sstream>
 
+#include "Constants.h"
+
 // 생성자
 UserManager::UserManager() : users(std::vector<User>()) {}
 
@@ -17,7 +19,7 @@ void UserManager::addUser(int id, const std::string& name,
 
 // 사용자 목록 출력
 void UserManager::printUsers() const {
-    if(users.size() < 1) {
+    if(users.empty()) {
         std::cout << "사용자 목록이 존재하지 않습니다!\n";
         return;
     }
@@ -57,7 +59,7 @@ void UserManager::loadFromFile(const std::string& filename) {
 
     std::string line;
     getline(file, line);  // header skip
-    int lineNum = 1;
+    int lineNum = AppConstants::CSV_HEADER_LINE;
 
     while(getline(file, line)) {
         lineNum++;

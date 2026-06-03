@@ -7,6 +7,8 @@
 #include <sstream>
 #include <vector>
 
+#include "Constants.h"
+
 // 생성자
 MovieManager::MovieManager() : movies(std::vector<Movie>()) {}
 
@@ -52,7 +54,7 @@ const std::vector<Movie>& MovieManager::getMovies() const {
 
 // 영화 목록 출력
 void MovieManager::printMovieList() const {
-    if(movies.size() < 1) {
+    if(movies.empty()) {
         std::cout << "영화 목록이 존재하지 않습니다!\n";
         return;
     }
@@ -64,7 +66,7 @@ void MovieManager::printMovieList() const {
 
 // 전달받은 영화 목록 출력
 void MovieManager::printMovieList(const std::vector<Movie>& sorted) const {
-    if(sorted.size() < 1) {
+    if(sorted.empty()) {
         std::cout << "영화 목록이 존재하지 않습니다!\n";
         return;
     }
@@ -86,7 +88,7 @@ void MovieManager::loadFromFile(const std::string& filename) {
 
     std::string line;
     getline(file, line);  // header skip
-    int lineNum = 1;
+    int lineNum = AppConstants::CSV_HEADER_LINE;
 
     while(getline(file, line)) {
         lineNum++;
@@ -121,7 +123,8 @@ void MovieManager::loadFromFile(const std::string& filename) {
                 throw std::invalid_argument("개봉연도 누락");
             }
             year = std::stoi(token);
-            if(year < 1888 || year > 2100) {
+            if(year < AppConstants::MIN_RELEASE_YEAR ||
+               year > AppConstants::MAX_RELEASE_YEAR) {
                 throw std::out_of_range("개봉연도 범위 오류");
             }
 

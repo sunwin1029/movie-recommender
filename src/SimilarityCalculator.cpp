@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "Constants.h"
+
 // 사용자간의 유사도 (취향) 정도를 반환하는 함수
 // 기준
 // 1. 공통으로 본 영화 기준(공통으로 본 영화 수가 많을수록 취향이 같음)
@@ -22,8 +24,8 @@ int SimilarityCalculator::calculate(const std::vector<Rating>& userA,
     }
 
     if(unitedMovieAmt == 0) {
-        return -1e9;
+        return AppConstants::NO_COMMON_MOVIE_SIMILARITY;
     }
 
-    return unitedMovieAmt * 10 - scoreDiffSum;
+    return unitedMovieAmt * AppConstants::COMMON_MOVIE_WEIGHT - scoreDiffSum;
 }

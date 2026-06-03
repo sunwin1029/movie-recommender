@@ -6,6 +6,7 @@
 #include <utility>
 #include <map>
 
+#include "Constants.h"
 #include "SimilarityCalculator.h"
 
 // 비교 함수(유사도 높은순)
@@ -55,7 +56,7 @@ std::vector<int> Recommender::recommend(int targetUserId,
         int similarity =
             SimilarityCalculator::calculate(targetUserRatings, otherRatings);
 
-        if(similarity > 0) {
+        if(similarity > AppConstants::MIN_SIMILARITY_SCORE) {
             similarities.push_back({user.getId(), similarity});
         }
     }
@@ -63,12 +64,11 @@ std::vector<int> Recommender::recommend(int targetUserId,
     std::sort(similarities.begin(), similarities.end(), Compare);
 
     std::map<int, double> movieScores;
-    int similarUserLimit = 3; // 유사 사용자 수는 3명으로 임의 지정
     int usedUserCount = 0;
 
     // 3. 유사 사용자가 높게 평가한 후보 영화에 추천 점수 누적
     for(const std::pair<int, int>& similarityPair : similarities) {
-        if(usedUserCount >= similarUserLimit) {
+        if(usedUserCount >= AppConstants::MAX_SIMILAR_USERS) {
             break;
         }
 
@@ -88,7 +88,7 @@ std::vector<int> Recommender::recommend(int targetUserId,
             }
 
             // 추천할만한 영화가 아닌 경우 (유사 사용자가 안좋게 평가할 영화를 추천할 이유 없음)
-            if(rating.getScore() < 3.0) {
+            if(rating.getScore() < AppConstants::MIN_RECOMMENDABLE_RATING) {
                 continue;
             }
 
