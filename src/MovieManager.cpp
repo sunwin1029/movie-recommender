@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 #include <vector>
 
@@ -78,33 +79,57 @@ void MovieManager::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
 
     if(!file.is_open()) {
-        std::cerr << "파일을 열 수 없습니다: " << filename << "\n";
-        return;
+        throw std::runtime_error("파일을 열 수 없습니다: " + filename);
     }
+
+    movies.clear();
 
     std::string line;
     getline(file, line);  // header skip
+    int lineNum = 1;
 
     while(getline(file, line)) {
-        std::stringstream ss(line);
-        std::string token;
+        lineNum++;
 
-        int id;
-        std::string title;
-        std::string genre;
-        int year;
+        if(line.empty()) {
+            continue;
+        }
 
-        getline(ss, token, ',');
-        id = std::stoi(token);
+        try {
+            std::stringstream ss(line);
+            std::string token;
 
-        getline(ss, title, ',');
+            int id;
+            std::string title;
+            std::string genre;
+            int year;
 
-        getline(ss, genre, ',');
+            if(!getline(ss, token, ',')) {
+                throw std::invalid_argument("영화 id 누락");
+            }
+            id = std::stoi(token);
 
-        getline(ss, token, ',');
-        year = std::stoi(token);
+            if(!getline(ss, title, ',') || title.empty()) {
+                throw std::invalid_argument("영화 제목 누락");
+            }
 
-        addMovie(id, title, genre, year);
+            if(!getline(ss, genre, ',') || genre.empty()) {
+                throw std::invalid_argument("영화 장르 누락");
+            }
+
+            if(!getline(ss, token, ',')) {
+                throw std::invalid_argument("개봉연도 누락");
+            }
+            year = std::stoi(token);
+            if(year < 1888 || year > 2100) {
+                throw std::out_of_range("개봉연도 범위 오류");
+            }
+
+            addMovie(id, title, genre, year);
+        } catch(const std::exception& e) {
+            std::cerr << filename << ":" << lineNum << "번째 줄 건너뜀: "
+                      << e.what() << "\n";
+        }
     }
 }
 

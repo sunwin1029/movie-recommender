@@ -9,9 +9,23 @@ Manager::Manager() : movieManager(), ratingManager(), userManager() {}
 
 // CSV 파일 로드
 void Manager::loadAll() {
-    movieManager.loadFromFile("data/movies.csv");
-    userManager.loadFromFile("data/users.csv");
-    ratingManager.loadFromFile("data/ratings.csv");
+    try {
+        movieManager.loadFromFile("data/movies.csv");
+    } catch(const std::exception& e) {
+        std::cerr << "영화 데이터 로드 실패: " << e.what() << "\n";
+    }
+
+    try {
+        userManager.loadFromFile("data/users.csv");
+    } catch(const std::exception& e) {
+        std::cerr << "사용자 데이터 로드 실패: " << e.what() << "\n";
+    }
+
+    try {
+        ratingManager.loadFromFile("data/ratings.csv");
+    } catch(const std::exception& e) {
+        std::cerr << "평점 데이터 로드 실패: " << e.what() << "\n";
+    }
 
     // 영화별 평균 평점 계산
     for(const Rating &rating : ratingManager.getRatings()) {
