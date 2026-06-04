@@ -10,13 +10,12 @@
 #include "Constants.h"
 
 // 생성자
-MovieManager::MovieManager() : movies(std::vector<Movie>()) {}
+MovieManager::MovieManager() : movies() {}
 
 // 영화 추가
 void MovieManager::addMovie(int id, const std::string& title,
                             const std::string& genre, int year) {
-    Movie movie = Movie(id, title, genre, year);
-    movies.emplace_back(movie);
+    movies.emplace_back(id, title, genre, year);
 }
 
 // 제목으로 영화 검색

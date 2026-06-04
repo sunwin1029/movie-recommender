@@ -8,13 +8,12 @@
 #include "Constants.h"
 
 // 생성자
-UserManager::UserManager() : users(std::vector<User>()) {}
+UserManager::UserManager() : users() {}
 
 // 사용자 추가
 void UserManager::addUser(int id, const std::string& name,
                           const std::string& email) {
-    User user = User(id, name, email);
-    users.emplace_back(user);
+    users.emplace_back(id, name, email);
 }
 
 // 사용자 목록 출력

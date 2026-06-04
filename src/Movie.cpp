@@ -20,9 +20,9 @@ double Movie::getAverageRating() const {
     return totalRating / ratingCount;
 }
 
-std::string Movie::getTitle() const { return title; }
+const std::string& Movie::getTitle() const { return title; }
 
-std::string Movie::getGenre() const { return genre; }
+const std::string& Movie::getGenre() const { return genre; }
 
 int Movie::getId() const { return id; }
 

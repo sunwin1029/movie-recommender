@@ -8,12 +8,12 @@
 #include "Constants.h"
 
 // 생성자
-RatingManager::RatingManager() : ratings(std::vector<Rating>()) {}
+RatingManager::RatingManager() : ratings() {}
 
 
 // 평점 추가
 void RatingManager::addRating(int userId, int movieId, double score) {
-    ratings.emplace_back(Rating(userId, movieId, score));
+    ratings.emplace_back(userId, movieId, score);
 }
 
 // 평점 목록 반환
