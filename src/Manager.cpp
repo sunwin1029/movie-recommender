@@ -1,6 +1,7 @@
 #include "Manager.h"
 
 #include <iostream>
+#include <map>
 #include <vector>
 
 #include "Constants.h"
@@ -35,6 +36,35 @@ void Manager::loadAll() {
         if(movie != nullptr) {
             movie->addRating(rating.getScore());
         }
+    }
+}
+
+// 11. 통계 보기
+void Manager::printStatistics() const {
+    try {
+        std::cout << "[영화 통계입니다]\n\n";
+        std::cout << "전체 평균 평점: " << movieManager.getAverageRating()
+                  << "\n\n";
+
+        std::cout << "[평점 상위 영화]\n";
+        movieManager.printMovieList(
+            movieManager.getTopMovies(AppConstants::TOP_STATISTICS_MOVIE_COUNT));
+
+        std::map<std::string, double> averageByGenre =
+            movieManager.getAverageRatingByGenre();
+
+        if(averageByGenre.empty()) {
+            std::cout << "장르별 평균 평점을 계산할 수 없습니다!\n";
+            return;
+        }
+
+        std::cout << "[장르별 평균 평점]\n";
+        for(const auto& genreAverage : averageByGenre) {
+            std::cout << genreAverage.first << ": " << genreAverage.second
+                      << "\n";
+        }
+    } catch(const std::exception& e) {
+        std::cout << "통계를 계산할 수 없습니다: " << e.what() << "\n";
     }
 }
 

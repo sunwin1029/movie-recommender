@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <stdexcept>
 #include <sstream>
 #include <vector>
@@ -44,6 +45,62 @@ std::vector<Movie> MovieManager::getSortedMovies() const {
     std::sort(sorted.begin(), sorted.end());
 
     return sorted;
+}
+
+// 평점 상위 영화 목록 반환
+std::vector<Movie> MovieManager::getTopMovies(int count) const {
+    std::vector<Movie> sorted = getSortedMovies();
+
+    if(count < static_cast<int>(sorted.size())) {
+        sorted.resize(count);
+    }
+
+    return sorted;
+}
+
+// 장르별 평균 평점 반환
+std::map<std::string, double> MovieManager::getAverageRatingByGenre() const {
+    std::map<std::string, double> totalByGenre;
+    std::map<std::string, int> countByGenre;
+
+    for(const Movie& movie : movies) {
+        if(movie.getRatingCount() == 0) {
+            continue;
+        }
+
+        totalByGenre[movie.getGenre()] += movie.getAverageRating();
+        countByGenre[movie.getGenre()]++;
+    }
+
+    std::map<std::string, double> averageByGenre;
+
+    for(const auto& genreTotal : totalByGenre) {
+        const std::string& genre = genreTotal.first;
+        averageByGenre[genre] = genreTotal.second / countByGenre[genre];
+    }
+
+    return averageByGenre;
+}
+
+// 전체 평균 평점 반환
+double MovieManager::getAverageRating() const {
+    double total = 0.0;
+    int ratedMovieCount = 0;
+
+    for(const Movie& movie : movies) {
+        if(movie.getRatingCount() == 0) {
+            continue;
+        }
+
+        total += movie.getAverageRating();
+        ratedMovieCount++;
+    }
+
+    if(ratedMovieCount == 0) {
+        throw std::runtime_error("평점이 등록된 영화가 없습니다.");
+    }
+
+    return total / ratedMovieCount;
 }
 
 // 영화 목록 반환

@@ -25,6 +25,7 @@ class Manager {
     void addRating(int userId, int movieId, double score);
     void printRatingsOfMovie(int movieId);
     void recommendMovies(int userId);
+    void printStatistics() const;
 
     void printMovieList() const;
     void printSortedMovieList() const;

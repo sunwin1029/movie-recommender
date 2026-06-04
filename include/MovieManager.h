@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include <string>
 #include <vector>
 
@@ -19,6 +20,9 @@ class MovieManager : public BaseManager {
     Movie* findMovieByTitle(const std::string& title);
 
     std::vector<Movie> getSortedMovies() const;
+    std::vector<Movie> getTopMovies(int count) const;
+    std::map<std::string, double> getAverageRatingByGenre() const;
+    double getAverageRating() const;
     const std::vector<Movie>& getMovies() const;
 
     void printMovieList() const;

@@ -17,6 +17,7 @@ constexpr int MENU_ADD_RATING = 7;
 constexpr int MENU_PRINT_MOVIE_RATINGS = 8;
 constexpr int MENU_RECOMMEND_MOVIES = 9;
 constexpr int MENU_HELP = 10;
+constexpr int MENU_STATISTICS = 11;
 }
 
 // 프로그램 전체 프로세스
@@ -78,6 +79,10 @@ void execute(int menu, Manager& m) {
             // 도움말 출력
             printMenu();
             break;
+        case MENU_STATISTICS:
+            // 통계 보기
+            printStatistics(m);
+            break;
         default:
             cout << "잘못된 "
                     "메뉴입니다!\n";
@@ -99,6 +104,8 @@ void printMenu() {
     cout << "[ 추천 ]\n  9. 영화 추천 받기\n\n";
 
     cout << "[ 도움말 ]\n  10. 메뉴 다시 보기\n\n";
+
+    cout << "[ 통계 ]\n  11. 통계 보기\n\n";
 
     cout << "  0. 종료\n\n";
 
@@ -218,6 +225,11 @@ void recommendMovies(Manager& m) {
                             "추천받을 사용자 id를 입력해주세요\n> ");
 
     m.recommendMovies(userId);
+}
+
+// 11. 통계 보기
+void printStatistics(Manager& m) {
+    m.printStatistics();
 }
 
 // 기타 : 정수값 검증 함수
