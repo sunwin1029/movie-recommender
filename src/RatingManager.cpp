@@ -2,15 +2,18 @@
 
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 
+#include "Constants.h"
+
 // 생성자
-RatingManager::RatingManager() : ratings(std::vector<Rating>()) {}
+RatingManager::RatingManager() : ratings() {}
 
 
 // 평점 추가
 void RatingManager::addRating(int userId, int movieId, double score) {
-    ratings.emplace_back(Rating(userId, movieId, score));
+    ratings.emplace_back(userId, movieId, score);
 }
 
 // 평점 목록 반환
@@ -53,31 +56,54 @@ void RatingManager::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
 
     if(!file.is_open()) {
-        std::cerr << "파일을 열 수 없습니다: " << filename << "\n";
-        return;
+        throw std::runtime_error("파일을 열 수 없습니다: " + filename);
     }
+
+    ratings.clear();
 
     std::string line;
     getline(file, line);  // header skip
+    int lineNum = AppConstants::CSV_HEADER_LINE;
 
     while(getline(file, line)) {
-        std::stringstream ss(line);
-        std::string token;
+        lineNum++;
 
-        int userId;
-        int movieId;
-        double score;
+        if(line.empty()) {
+            continue;
+        }
 
-        getline(ss, token, ',');
-        userId = std::stoi(token);
+        try {
+            std::stringstream ss(line);
+            std::string token;
 
-        getline(ss, token, ',');
-        movieId = std::stoi(token);
+            int userId;
+            int movieId;
+            double score;
 
-        getline(ss, token, ',');
-        score = std::stod(token);
+            if(!getline(ss, token, ',')) {
+                throw std::invalid_argument("사용자 id 누락");
+            }
+            userId = std::stoi(token);
 
-        addRating(userId, movieId, score);
+            if(!getline(ss, token, ',')) {
+                throw std::invalid_argument("영화 id 누락");
+            }
+            movieId = std::stoi(token);
+
+            if(!getline(ss, token, ',')) {
+                throw std::invalid_argument("평점 누락");
+            }
+            score = std::stod(token);
+            if(score < AppConstants::MIN_RATING_SCORE ||
+               score > AppConstants::MAX_RATING_SCORE) {
+                throw std::out_of_range("평점 범위 오류");
+            }
+
+            addRating(userId, movieId, score);
+        } catch(const std::exception& e) {
+            std::cerr << filename << ":" << lineNum << "번째 줄 건너뜀: "
+                      << e.what() << "\n";
+        }
     }
 }
 

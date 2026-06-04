@@ -1,17 +1,34 @@
 #include "UserInterface.h"
 
+#include <limits>
+
 using namespace std;
+
+namespace {
+constexpr int MENU_UNSELECTED = -1;
+constexpr int MENU_EXIT = 0;
+constexpr int MENU_ADD_MOVIE = 1;
+constexpr int MENU_FIND_MOVIE = 2;
+constexpr int MENU_PRINT_MOVIES = 3;
+constexpr int MENU_PRINT_SORTED_MOVIES = 4;
+constexpr int MENU_ADD_USER = 5;
+constexpr int MENU_PRINT_USERS = 6;
+constexpr int MENU_ADD_RATING = 7;
+constexpr int MENU_PRINT_MOVIE_RATINGS = 8;
+constexpr int MENU_RECOMMEND_MOVIES = 9;
+constexpr int MENU_HELP = 10;
+}
 
 // 프로그램 전체 프로세스
 void program(Manager& m) {
-    int menu = -1;
+    int menu = MENU_UNSELECTED;
 
     printMenu();
 
     while(true) {
         menu = getInteger("잘못된 입력입니다!\n",
                           "메뉴를 선택해주세요(도움말 : \"10\")\n");
-        if(menu == 0) break;
+        if(menu == MENU_EXIT) break;
         execute(menu, m);
     }
 
@@ -21,43 +38,43 @@ void program(Manager& m) {
 // 각 기능 실행 함수
 void execute(int menu, Manager& m) {
     switch(menu) {
-        case 1:
+        case MENU_ADD_MOVIE:
             // 영화 추가
             addMovie(m);
             break;
-        case 2:
+        case MENU_FIND_MOVIE:
             // 제목으로 검색
             findMovieByTitle(m);
             break;
-        case 3:
+        case MENU_PRINT_MOVIES:
             // 전체 목록 출력
             printAllMovies(m);
             break;
-        case 4:
+        case MENU_PRINT_SORTED_MOVIES:
             // 평점순 정렬 출력
             printSortedMovies(m);
             break;
-        case 5:
+        case MENU_ADD_USER:
             // 사용자 추가
             addUser(m);
             break;
-        case 6:
+        case MENU_PRINT_USERS:
             // 사용자 목록 출력
             printUsers(m);
             break;
-        case 7:
+        case MENU_ADD_RATING:
             // 평점 입력
             addRating(m);
             break;
-        case 8:
+        case MENU_PRINT_MOVIE_RATINGS:
             // 영화별 평점 보기
             printRatingsOfMovie(m);
             break;
-        case 9:
+        case MENU_RECOMMEND_MOVIES:
             // 영화 추천
             recommendMovies(m);
             break;
-        case 10:
+        case MENU_HELP:
             // 도움말 출력
             printMenu();
             break;
@@ -175,12 +192,12 @@ void addRating(Manager& m) {
 
         if(cin.fail()) {
             cin.clear();
-            cin.ignore(1000, '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "잘못된 평점 값입니다!\n";
             continue;
         }
 
-        cin.ignore(1000, '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         break;
     }
 
@@ -214,12 +231,12 @@ int getInteger(const std::string& warningMessage,
 
         if(cin.fail()) {
             cin.clear();
-            cin.ignore(1000, '\n');
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << warningMessage << "\n";
             continue;
         }
 
-        cin.ignore(1000, '\n');
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         return val;
     }
 }

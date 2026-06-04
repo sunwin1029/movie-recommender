@@ -1,5 +1,7 @@
 #include "Movie.h"
 
+#include "Constants.h"
+
 // 기본 생성자
 Movie::Movie() : id(0), releaseYear(0), totalRating(0.0), ratingCount(0) {}
 
@@ -14,13 +16,13 @@ Movie::Movie(int id, const std::string& title, const std::string& genre,
       ratingCount(0) {}
 
 double Movie::getAverageRating() const {
-    if(ratingCount == 0) return 0.0;  // 0 나눗셈 방어
+    if(ratingCount == 0) return AppConstants::NO_RATING_AVERAGE;  // 0 나눗셈 방어
     return totalRating / ratingCount;
 }
 
-std::string Movie::getTitle() const { return title; }
+const std::string& Movie::getTitle() const { return title; }
 
-std::string Movie::getGenre() const { return genre; }
+const std::string& Movie::getGenre() const { return genre; }
 
 int Movie::getId() const { return id; }
 

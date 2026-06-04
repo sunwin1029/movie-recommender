@@ -13,8 +13,8 @@ class User {
     User(int id, const std::string& name, const std::string& email);
 
     int getId() const;
-    std::string getName() const;
-    std::string getEmail() const;
+    const std::string& getName() const;
+    const std::string& getEmail() const;
     
 };
 

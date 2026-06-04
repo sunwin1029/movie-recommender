@@ -2,21 +2,23 @@
 
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 
+#include "Constants.h"
+
 // 생성자
-UserManager::UserManager() : users(std::vector<User>()) {}
+UserManager::UserManager() : users() {}
 
 // 사용자 추가
 void UserManager::addUser(int id, const std::string& name,
                           const std::string& email) {
-    User user = User(id, name, email);
-    users.emplace_back(user);
+    users.emplace_back(id, name, email);
 }
 
 // 사용자 목록 출력
 void UserManager::printUsers() const {
-    if(users.size() < 1) {
+    if(users.empty()) {
         std::cout << "사용자 목록이 존재하지 않습니다!\n";
         return;
     }
@@ -49,29 +51,48 @@ void UserManager::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
 
     if(!file.is_open()) {
-        std::cerr << "파일을 열 수 없습니다: " << filename << "\n";
-        return;
+        throw std::runtime_error("파일을 열 수 없습니다: " + filename);
     }
+
+    users.clear();
 
     std::string line;
     getline(file, line);  // header skip
+    int lineNum = AppConstants::CSV_HEADER_LINE;
 
     while(getline(file, line)) {
-        std::stringstream ss(line);
-        std::string token;
+        lineNum++;
 
-        int id;
-        std::string name;
-        std::string email;
+        if(line.empty()) {
+            continue;
+        }
 
-        getline(ss, token, ',');
-        id = std::stoi(token);
+        try {
+            std::stringstream ss(line);
+            std::string token;
 
-        getline(ss, name, ',');
+            int id;
+            std::string name;
+            std::string email;
 
-        getline(ss, email, ',');
+            if(!getline(ss, token, ',')) {
+                throw std::invalid_argument("사용자 id 누락");
+            }
+            id = std::stoi(token);
 
-        addUser(id, name, email);
+            if(!getline(ss, name, ',') || name.empty()) {
+                throw std::invalid_argument("사용자 이름 누락");
+            }
+
+            if(!getline(ss, email, ',') || email.empty()) {
+                throw std::invalid_argument("사용자 email 누락");
+            }
+
+            addUser(id, name, email);
+        } catch(const std::exception& e) {
+            std::cerr << filename << ":" << lineNum << "번째 줄 건너뜀: "
+                      << e.what() << "\n";
+        }
     }
 }
 
