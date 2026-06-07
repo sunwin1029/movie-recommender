@@ -34,6 +34,7 @@ std::vector<Rating> getRatingsByUser(int userId,
     return userRatings;
 }
 
+// 이미 본 영화는 다시 추천하지 않기 위해 target user의 시청 이력을 set으로 보관한다.
 std::set<int> getWatchedMovieIds(const std::vector<Rating>& ratings) {
     std::set<int> watchedMovieIds;
 
@@ -44,6 +45,7 @@ std::set<int> getWatchedMovieIds(const std::vector<Rating>& ratings) {
     return watchedMovieIds;
 }
 
+// target user와 공통 영화가 있는 사용자만 유사 사용자 후보로 남긴다.
 std::vector<Similarity> calculateSimilarities(
     int targetUserId, const std::vector<Rating>& targetUserRatings,
     const std::vector<User>& users, const std::vector<Rating>& ratings) {
@@ -68,6 +70,7 @@ std::vector<Similarity> calculateSimilarities(
     return similarities;
 }
 
+// 유사도가 높은 사용자의 높은 평점 영화일수록 더 큰 추천 점수를 받는다.
 std::map<int, double> accumulateCandidateScores(
     const std::vector<Similarity>& similarities,
     const std::set<int>& targetUserWatchedMovies,
@@ -84,23 +87,23 @@ std::map<int, double> accumulateCandidateScores(
         int similarity = similarityPair.second;
 
         for(const Rating& rating : ratings) {
-            // 유사 사용자의 Rating 찾기
+            // 유사 사용자가 남긴 평점만 추천 후보 계산에 사용한다.
             if(rating.getUserId() != similarUserId) {
                 continue;
             }
 
-            // 타겟 사용자가 이미 본 영화인 경우
+            // 이미 본 영화는 새 추천 결과로 의미가 없으므로 제외한다.
             if(targetUserWatchedMovies.find(rating.getMovieId()) !=
                targetUserWatchedMovies.end()) {
                 continue;
             }
 
-            // 추천할만한 영화가 아닌 경우 (유사 사용자가 안좋게 평가할 영화를 추천할 이유 없음)
+            // 유사 사용자가 낮게 평가한 영화는 취향이 비슷해도 추천 근거가 약하므로 제외한다.
             if(rating.getScore() < AppConstants::MIN_RECOMMENDABLE_RATING) {
                 continue;
             }
 
-            // 영화에 가중치 부여
+            // 평점에 사용자 유사도를 곱해 "비슷한 사용자가 높게 평가한 영화"를 우선한다.
             movieScores[rating.getMovieId()] +=
                 similarity * rating.getScore();
         }
@@ -128,6 +131,7 @@ std::vector<int> getTopMovieIds(const std::map<int, double>& movieScores,
 }
 }
 
+// recommend()는 movie id만 반환하고, 영화 객체 조회와 출력은 Manager가 담당한다.
 std::vector<int> Recommender::recommend(int targetUserId,
                                         const std::vector<User>& users,
                                         const std::vector<Rating>& ratings,

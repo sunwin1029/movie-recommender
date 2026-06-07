@@ -64,6 +64,7 @@ std::map<std::string, double> MovieManager::getAverageRatingByGenre() const {
     std::map<std::string, int> countByGenre;
 
     for(const Movie& movie : movies) {
+        // 평점이 없는 영화까지 포함하면 0점 영화처럼 평균이 왜곡되므로 제외한다.
         if(movie.getRatingCount() == 0) {
             continue;
         }
@@ -88,6 +89,7 @@ double MovieManager::getAverageRating() const {
     int ratedMovieCount = 0;
 
     for(const Movie& movie : movies) {
+        // 통계의 전체 평균은 "등록된 영화 수"가 아니라 "평점이 있는 영화 수"를 기준으로 한다.
         if(movie.getRatingCount() == 0) {
             continue;
         }

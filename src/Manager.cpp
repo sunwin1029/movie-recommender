@@ -29,7 +29,7 @@ void Manager::loadAll() {
         std::cerr << "평점 데이터 로드 실패: " << e.what() << "\n";
     }
 
-    // 영화별 평균 평점 계산
+    // ratings.csv에는 개별 평점만 저장하므로, 로드 후 Movie 객체에 다시 연결해 평균 평점을 재계산한다.
     for(const Rating &rating : ratingManager.getRatings()) {
         Movie* movie = movieManager.findMovieById(rating.getMovieId());
 
@@ -50,6 +50,7 @@ void Manager::printStatistics() const {
         movieManager.printMovieList(
             movieManager.getTopMovies(AppConstants::TOP_STATISTICS_MOVIE_COUNT));
 
+        // 장르별 평균은 실제 평점이 있는 영화만 대상으로 계산한다.
         std::map<std::string, double> averageByGenre =
             movieManager.getAverageRatingByGenre();
 
