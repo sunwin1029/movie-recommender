@@ -3,9 +3,9 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-#include <sstream>
 
 #include "Constants.h"
+#include "CsvUtils.h"
 
 // 생성자
 UserManager::UserManager() : users() {}
@@ -68,23 +68,31 @@ void UserManager::loadFromFile(const std::string& filename) {
         }
 
         try {
-            std::stringstream ss(line);
-            std::string token;
+            std::vector<std::string> fields = CsvUtils::parseCsvLine(line);
 
             int id;
             std::string name;
             std::string email;
 
-            if(!getline(ss, token, ',')) {
+            if(fields.size() < 3) {
+                throw std::invalid_argument("사용자 필드 누락");
+            }
+            if(fields.size() > 3) {
+                throw std::invalid_argument("사용자 필드 개수 오류");
+            }
+
+            if(fields[0].empty()) {
                 throw std::invalid_argument("사용자 id 누락");
             }
-            id = std::stoi(token);
+            id = std::stoi(fields[0]);
 
-            if(!getline(ss, name, ',') || name.empty()) {
+            name = fields[1];
+            if(name.empty()) {
                 throw std::invalid_argument("사용자 이름 누락");
             }
 
-            if(!getline(ss, email, ',') || email.empty()) {
+            email = fields[2];
+            if(email.empty()) {
                 throw std::invalid_argument("사용자 email 누락");
             }
 
@@ -108,8 +116,8 @@ void UserManager::saveToFile(const std::string& filename) const {
     file << "id,name,email\n";
 
     for(const User& user : users) {
-        file << user.getId() << "," << user.getName() << ","
-             << user.getEmail() << "\n";
+        file << user.getId() << "," << CsvUtils::escapeCsvField(user.getName())
+             << "," << CsvUtils::escapeCsvField(user.getEmail()) << "\n";
     }
 }
 

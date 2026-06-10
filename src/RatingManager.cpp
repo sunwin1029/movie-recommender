@@ -3,9 +3,9 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-#include <sstream>
 
 #include "Constants.h"
+#include "CsvUtils.h"
 
 // 생성자
 RatingManager::RatingManager() : ratings() {}
@@ -73,27 +73,33 @@ void RatingManager::loadFromFile(const std::string& filename) {
         }
 
         try {
-            std::stringstream ss(line);
-            std::string token;
+            std::vector<std::string> fields = CsvUtils::parseCsvLine(line);
 
             int userId;
             int movieId;
             double score;
 
-            if(!getline(ss, token, ',')) {
+            if(fields.size() < 3) {
+                throw std::invalid_argument("평점 필드 누락");
+            }
+            if(fields.size() > 3) {
+                throw std::invalid_argument("평점 필드 개수 오류");
+            }
+
+            if(fields[0].empty()) {
                 throw std::invalid_argument("사용자 id 누락");
             }
-            userId = std::stoi(token);
+            userId = std::stoi(fields[0]);
 
-            if(!getline(ss, token, ',')) {
+            if(fields[1].empty()) {
                 throw std::invalid_argument("영화 id 누락");
             }
-            movieId = std::stoi(token);
+            movieId = std::stoi(fields[1]);
 
-            if(!getline(ss, token, ',')) {
+            if(fields[2].empty()) {
                 throw std::invalid_argument("평점 누락");
             }
-            score = std::stod(token);
+            score = std::stod(fields[2]);
             if(score < AppConstants::MIN_RATING_SCORE ||
                score > AppConstants::MAX_RATING_SCORE) {
                 throw std::out_of_range("평점 범위 오류");

@@ -5,10 +5,10 @@
 #include <iostream>
 #include <map>
 #include <stdexcept>
-#include <sstream>
 #include <vector>
 
 #include "Constants.h"
+#include "CsvUtils.h"
 
 // 생성자
 MovieManager::MovieManager() : movies() {}
@@ -156,31 +156,39 @@ void MovieManager::loadFromFile(const std::string& filename) {
         }
 
         try {
-            std::stringstream ss(line);
-            std::string token;
+            std::vector<std::string> fields = CsvUtils::parseCsvLine(line);
 
             int id;
             std::string title;
             std::string genre;
             int year;
 
-            if(!getline(ss, token, ',')) {
+            if(fields.size() < 4) {
+                throw std::invalid_argument("영화 필드 누락");
+            }
+            if(fields.size() > 4) {
+                throw std::invalid_argument("영화 필드 개수 오류");
+            }
+
+            if(fields[0].empty()) {
                 throw std::invalid_argument("영화 id 누락");
             }
-            id = std::stoi(token);
+            id = std::stoi(fields[0]);
 
-            if(!getline(ss, title, ',') || title.empty()) {
+            title = fields[1];
+            if(title.empty()) {
                 throw std::invalid_argument("영화 제목 누락");
             }
 
-            if(!getline(ss, genre, ',') || genre.empty()) {
+            genre = fields[2];
+            if(genre.empty()) {
                 throw std::invalid_argument("영화 장르 누락");
             }
 
-            if(!getline(ss, token, ',')) {
+            if(fields[3].empty()) {
                 throw std::invalid_argument("개봉연도 누락");
             }
-            year = std::stoi(token);
+            year = std::stoi(fields[3]);
             if(year < AppConstants::MIN_RELEASE_YEAR ||
                year > AppConstants::MAX_RELEASE_YEAR) {
                 throw std::out_of_range("개봉연도 범위 오류");
@@ -206,8 +214,9 @@ void MovieManager::saveToFile(const std::string& filename) const {
     file << "id,title,genre,year\n";
 
     for(const Movie& movie : movies) {
-        file << movie.getId() << "," << movie.getTitle() << ","
-             << movie.getGenre() << "," << movie.getReleaseYear() << "\n";
+        file << movie.getId() << "," << CsvUtils::quoteCsvField(movie.getTitle())
+             << "," << CsvUtils::escapeCsvField(movie.getGenre()) << ","
+             << movie.getReleaseYear() << "\n";
     }
 }
 
