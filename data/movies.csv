@@ -1,4 +1,54 @@
 id,title,genre,year
-1,Inception,Sci-Fi,2010
-2,Interstellar,Sci-Fi,2014
-3,Parasite,Drama,2019
+1,"Inception",Sci-Fi,2010
+2,"Interstellar",Sci-Fi,2014
+3,"Parasite",Drama,2019
+4,"Spider-Man, Into the Spider-Verse",Animation,2018
+5,"The Matrix",Sci-Fi,1999
+6,"The Shawshank Redemption",Drama,1994
+7,"The Godfather",Crime,1972
+8,"The Dark Knight",Action,2008
+9,"Pulp Fiction",Crime,1994
+10,"Forrest Gump",Drama,1994
+11,"The Lord of the Rings: The Fellowship of the Ring",Fantasy,2001
+12,"The Lord of the Rings: The Two Towers",Fantasy,2002
+13,"The Lord of the Rings: The Return of the King",Fantasy,2003
+14,"Spirited Away",Animation,2001
+15,"Your Name",Animation,2016
+16,"La La Land",Musical,2016
+17,"Whiplash",Drama,2014
+18,"The Social Network",Drama,2010
+19,"Mad Max: Fury Road",Action,2015
+20,"Arrival",Sci-Fi,2016
+21,"Blade Runner 2049",Sci-Fi,2017
+22,"Her",Romance,2013
+23,"Coco",Animation,2017
+24,"Inside Out",Animation,2015
+25,"Toy Story",Animation,1995
+26,"Up",Animation,2009
+27,"Finding Nemo",Animation,2003
+28,"Avengers: Endgame",Action,2019
+29,"Iron Man",Action,2008
+30,"Guardians of the Galaxy",Action,2014
+31,"The Grand Budapest Hotel",Comedy,2014
+32,"Knives Out",Mystery,2019
+33,"Gone Girl",Thriller,2014
+34,"The Silence of the Lambs",Thriller,1991
+35,"Get Out",Horror,2017
+36,"A Quiet Place",Horror,2018
+37,"The Truman Show",Drama,1998
+38,"Eternal Sunshine of the Spotless Mind",Romance,2004
+39,"Before Sunrise",Romance,1995
+40,"The Notebook",Romance,2004
+41,"Dune",Sci-Fi,2021
+42,"Oppenheimer",Biography,2023
+43,"Barbie",Comedy,2023
+44,"Top Gun: Maverick",Action,2022
+45,"Everything Everywhere All at Once",Sci-Fi,2022
+46,"Minari",Drama,2020
+47,"Decision to Leave",Mystery,2022
+48,"Oldboy",Thriller,2003
+49,"Train to Busan",Horror,2016
+50,"The Handmaiden",Thriller,2016
+51,"The Good, the Bad and the Ugly",Western,1966
+52,"Dr. Strangelove, or How I Learned to Stop Worrying and Love the Bomb",Comedy,1964
+53,"Mission: Impossible - Fallout",Action,2018
